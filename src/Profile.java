@@ -1,3 +1,5 @@
+import Other.Post;
+
 class Profile
 {
 	String firstName;

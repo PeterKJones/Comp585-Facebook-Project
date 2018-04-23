@@ -2,6 +2,7 @@ import Scenes.LoginPage;
 import Scenes.ProfileCreation;
 import Scenes.ProfileScene;
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
@@ -22,6 +23,7 @@ public class Main extends Application
 		
 		
 		mainWindow.setTitle("Facebook Lite");
+		mainWindow.getIcons().add(new Image("Images/fbl_main_icon.png"));
 		
 		initializeScenes(mainWindow);
 		connectScenes(mainWindow);
