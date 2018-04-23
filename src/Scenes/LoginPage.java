@@ -18,7 +18,7 @@ public class LoginPage
 	Button newUserButton;
 	public Button loginButton;
 	
-	public LoginPage(Stage mainWindow)
+	public LoginPage()
 	{
 		Text username = new Text("username: ");
 		Text password = new Text("password: ");
@@ -42,7 +42,7 @@ public class LoginPage
 		
 		
 		
-		StackPane layout = new StackPane();
+	    layout = new StackPane();
 		
 		layout.getChildren().add(gridPane);
 		
