@@ -1,6 +1,7 @@
 import Scenes.LoginPage;
 import Scenes.ProfileCreation;
 import Scenes.ProfileScene;
+import Scenes.SettingsScene;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -11,6 +12,7 @@ public class Main extends Application
 	LoginPage loginPage;
 	ProfileCreation profileCreation;
 	ProfileScene profileScene;
+	SettingsScene settingsScene;
 	
 	public static void main(String[] args)
 	{
@@ -37,6 +39,7 @@ public class Main extends Application
 		loginPage = new LoginPage();
 		profileCreation = new ProfileCreation(mainWindow);
 		profileScene = new ProfileScene();
+		settingsScene = new SettingsScene(mainWindow);
 		
 	}
 	
@@ -44,7 +47,9 @@ public class Main extends Application
 	{
 		loginPage.loginButton.setOnAction(e -> mainWindow.setScene(profileCreation.getScene())); //temporary guaranteed move to profile Creation. CHANGE THIS LATER
 		profileCreation.confirmButton.setOnAction(e -> mainWindow.setScene(profileScene.getScene()));
+		profileScene.settingsButton.setOnAction(e -> mainWindow.setScene(settingsScene.getScene()));
 		profileScene.logoutButton.setOnAction(e -> mainWindow.setScene(loginPage.getScene()));
+		settingsScene.confirmButton.setOnAction(e -> mainWindow.setScene(profileScene.getScene()));
 		//still need to setup all button actions for profile scene
 	}
 	
