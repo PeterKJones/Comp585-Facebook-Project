@@ -1,0 +1,11 @@
+//Info//
+119;;119;;119
+//status//
+I'm hungry
+//friends//
+--//
+//posts//
+--//
+showAge
+showFriends
+hidePosts
