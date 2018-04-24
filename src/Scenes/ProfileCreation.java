@@ -36,7 +36,7 @@ public class ProfileCreation
 		Text firstName = new Text("First Name: ");
 		Text lastName = new Text("Last Name: ");
 		Text age = new Text("Age: ");
-		Text gender = new Text("Gender: ");
+		Text gender = new Text("Classes.Gender: ");
 		Text location = new Text("Location: ");
 		Text education = new Text("Level of Education: ");
 		Text aboutMe = new Text("About Me: ");
