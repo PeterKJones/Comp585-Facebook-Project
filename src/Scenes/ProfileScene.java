@@ -34,8 +34,8 @@ public class ProfileScene
     private Text ageLabel, statusLabel, statusDescription, friendsListLabel, myPostsLabel;
     private TextArea postDescription;
     private ArrayList<Post> postArray;
-    private Button writeMsgButton, settingsButton, postButton, cancelButton;
-    public Button logoutButton;
+    private Button writeMsgButton, postButton, cancelButton;
+    public Button settingsButton,logoutButton;
 
 
 
