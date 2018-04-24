@@ -1,4 +1,4 @@
-package Other;
+package Classes;
 
 import java.time.LocalTime;
 
