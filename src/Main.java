@@ -77,13 +77,13 @@ public class Main extends Application
 		ResultSet result = statement.executeQuery();
 		if (!result.next() ) {
 			System.out.println("Incorrect Credentials");
+			return;
 		}
-		while(result.next()){
-			System.out.println("Name: " + result.getString("first_name"));
-			System.out.println("Username: " + result.getString("username"));
-			System.out.println("Password: " + result.getString("password"));
-		}
-
+		int id = result.getInt("id");
+		System.out.println("ID: " + result.getString("id"));
+		System.out.println("Name: " + result.getString("first_name"));
+		System.out.println("Username: " + result.getString("username"));
+		System.out.println("Password: " + result.getString("password"));
 		//Should return id or something to save who the current user is
 	}
 

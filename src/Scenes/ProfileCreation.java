@@ -28,7 +28,13 @@ public class ProfileCreation
 	public Button confirmButton;
 	public Button browseButton;
 	final FileChooser fileChooser = new FileChooser();
-	
+	public ToggleGroup genderGroup;
+	public TextField fNameField;
+	public TextField lNameField;
+	public ComboBox<String> ageBox;
+	public TextField locationField;
+	public ComboBox<String> levOfEduBox;
+	public TextField aboutMeField;
 	public ProfileCreation(Stage mainWindow)
 	{
 		
@@ -43,22 +49,22 @@ public class ProfileCreation
 		Text profileImage = new Text("Profile Picture: ");
 		
 		//right column
-		TextField fNameField = new TextField();
-		TextField lNameField = new TextField();
-		ComboBox<String> ageBox = new ComboBox<String>();
+		 fNameField = new TextField();
+		 lNameField = new TextField();
+		 ageBox = new ComboBox<String>();
 		for (int i = 1; i <= 100; i++) //populates the age box for ages 1 to 100
 		{
 			ageBox.getItems().add(String.valueOf(i));
 		}
-		ToggleGroup genderGroup = new ToggleGroup();
+		genderGroup = new ToggleGroup();
 		RadioButton genderMale = new RadioButton("Male");
 		genderMale.setToggleGroup(genderGroup);
 		RadioButton genderFemale = new RadioButton("Female");
 		genderFemale.setToggleGroup(genderGroup);
-		TextField locationField = new TextField();
-		ComboBox<String> levOfEduBox = new ComboBox<String>();
+		locationField = new TextField();
+		levOfEduBox = new ComboBox<String>();
 		levOfEduBox.getItems().addAll("None","Some High School","High School","College Undergraduate","College Graduate","PhD");
-		TextField aboutMeField = new TextField();
+		aboutMeField = new TextField();
 		browseButton = new Button("Browse");
 		
 		browseButton.setOnAction(
