@@ -17,13 +17,15 @@ public class LoginPage
 	Scene scene;
 	Button newUserButton;
 	public Button loginButton;
-	
+
+	public TextField userField;
+	public PasswordField passField;
 	public LoginPage()
 	{
 		Text username = new Text("username: ");
 		Text password = new Text("password: ");
-		TextField userField = new TextField();
-		PasswordField passField = new PasswordField();
+		userField = new TextField();
+		passField = new PasswordField();
 		newUserButton = new Button("New User");
 		loginButton = new Button("Login");
 		
@@ -35,12 +37,11 @@ public class LoginPage
 	    gridPane.setAlignment(Pos.CENTER); 
 	    gridPane.add(username, 0, 0); 
 	    gridPane.add(userField, 1, 0); 
-	    gridPane.add(password, 0, 1);       
+	    gridPane.add(password, 0, 1);
 	    gridPane.add(passField, 1, 1); 
 	    gridPane.add(newUserButton, 0, 2);
 	    gridPane.add(loginButton, 1, 2); 
-		
-		
+
 		
 	    layout = new StackPane();
 		
