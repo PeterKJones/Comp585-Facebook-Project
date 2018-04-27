@@ -11,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -31,6 +32,8 @@ public class ProfileCreation
 	public ToggleGroup genderGroup;
 	public TextField fNameField;
 	public TextField lNameField;
+	public TextField usernameField;
+	public PasswordField passwordField;
 	public ComboBox<String> ageBox;
 	public TextField locationField;
 	public ComboBox<String> levOfEduBox;
@@ -39,6 +42,8 @@ public class ProfileCreation
 	{
 		
 		//left column
+		Text username = new Text("Username: ");
+		Text password = new Text("Password: ");
 		Text firstName = new Text("First Name: ");
 		Text lastName = new Text("Last Name: ");
 		Text age = new Text("Age: ");
@@ -49,8 +54,11 @@ public class ProfileCreation
 		Text profileImage = new Text("Profile Picture: ");
 		
 		//right column
+		usernameField = new TextField();
+		passwordField = new PasswordField();
 		 fNameField = new TextField();
 		 lNameField = new TextField();
+
 		 ageBox = new ComboBox<String>();
 		for (int i = 1; i <= 100; i++) //populates the age box for ages 1 to 100
 		{
@@ -86,8 +94,9 @@ public class ProfileCreation
 		gridPane.setPadding(new Insets(10, 10, 10, 10)); 
 		gridPane.setVgap(5); 
 	    gridPane.setHgap(5);       
-	    gridPane.setAlignment(Pos.CENTER); 
-	    gridPane.add(firstName, 0, 0); 
+	    gridPane.setAlignment(Pos.CENTER);
+
+	    gridPane.add(firstName, 0, 0);
 	    gridPane.add(lastName, 0, 1); 
 	    gridPane.add(age, 0, 2); 
 	    gridPane.add(gender, 0, 3);
@@ -95,6 +104,8 @@ public class ProfileCreation
 	    gridPane.add(education, 0, 6);
 	    gridPane.add(aboutMe, 0, 7);
 	    gridPane.add(profileImage, 0, 8);
+		gridPane.add(username, 0 , 9);
+		gridPane.add(password, 0 , 10);
 	    
 	    
 	    gridPane.add(fNameField, 1, 0); 
@@ -106,7 +117,9 @@ public class ProfileCreation
 	    gridPane.add(levOfEduBox, 1, 6);
 	    gridPane.add(aboutMeField, 1, 7);
 	    gridPane.add(browseButton, 1, 8);
-	    gridPane.add(confirmButton, 1, 9);
+	    gridPane.add(usernameField, 1, 9);
+	    gridPane.add(passwordField, 1 , 10);
+	    gridPane.add(confirmButton, 1, 11);
 		
 		
 		StackPane layout = new StackPane();

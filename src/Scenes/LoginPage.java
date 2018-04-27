@@ -15,7 +15,7 @@ public class LoginPage
 {
 	StackPane layout;
 	Scene scene;
-	Button newUserButton;
+	public Button newUserButton;
 	public Button loginButton;
 
 	public TextField userField;
