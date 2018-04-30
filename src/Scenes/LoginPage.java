@@ -17,7 +17,7 @@ public class LoginPage
 	Scene scene;
 	Button newUserButton;
 	public Button loginButton;
-	
+
 	public LoginPage()
 	{
 		Text username = new Text("username: ");
@@ -26,29 +26,29 @@ public class LoginPage
 		PasswordField passField = new PasswordField();
 		newUserButton = new Button("New User");
 		loginButton = new Button("Login");
-		
+
 		GridPane gridPane = new GridPane();
-		gridPane.setMinSize(400, 200); 
-		gridPane.setPadding(new Insets(10, 10, 10, 10)); 
-		gridPane.setVgap(5); 
-	    gridPane.setHgap(5);       
-	    gridPane.setAlignment(Pos.CENTER); 
-	    gridPane.add(username, 0, 0); 
-	    gridPane.add(userField, 1, 0); 
-	    gridPane.add(password, 0, 1);       
-	    gridPane.add(passField, 1, 1); 
-	    gridPane.add(newUserButton, 0, 2);
-	    gridPane.add(loginButton, 1, 2); 
-		
-		
-		
-	    layout = new StackPane();
-		
+		gridPane.setMinSize(400, 200);
+		gridPane.setPadding(new Insets(10, 10, 10, 10));
+		gridPane.setVgap(5);
+		gridPane.setHgap(5);
+		gridPane.setAlignment(Pos.CENTER);
+		gridPane.add(username, 0, 0);
+		gridPane.add(userField, 1, 0);
+		gridPane.add(password, 0, 1);
+		gridPane.add(passField, 1, 1);
+		gridPane.add(newUserButton, 0, 2);
+		gridPane.add(loginButton, 1, 2);
+
+
+
+		layout = new StackPane();
+
 		layout.getChildren().add(gridPane);
-		
+
 		scene = new Scene(layout, 400, 200);
 	}
-	
+
 	public Scene getScene()
 	{
 		return scene;

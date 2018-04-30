@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.Scene?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Text?>
+
+<?import javafx.scene.layout.AnchorPane?>
+
+    <GridPane fx:id = "rootPane" fx:controller="Scenes.FXMLLoginController" xmlns:fx="http://javafx.com/fxml" alignment="CENTER" hgap="5" vgap="5">
+        <padding><Insets top="10" right="10" bottom="10" left="10"/> </padding>
+        <Text text="username:"
+              GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <TextField fx:id="userField"
+              GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <Text text="password:"
+              GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <PasswordField fx:id="passField"
+                   GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <Button text="New User"
+              GridPane.columnIndex="0" GridPane.rowIndex="2"
+              onAction="#handleNewUserButton"/>
+        <Button text="Login"
+                GridPane.columnIndex="1" GridPane.rowIndex="2"
+                onAction="#handleLoginButton"/>
+    </GridPane>
+
+
