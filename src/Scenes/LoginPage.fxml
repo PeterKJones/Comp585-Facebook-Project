@@ -15,22 +15,20 @@
 
 <?import javafx.scene.layout.AnchorPane?>
 
-    <GridPane fx:id = "rootPane" fx:controller="Scenes.FXMLLoginController" xmlns:fx="http://javafx.com/fxml" alignment="CENTER" hgap="5" vgap="5">
-        <padding><Insets top="10" right="10" bottom="10" left="10"/> </padding>
-        <Text text="username:"
-              GridPane.columnIndex="0" GridPane.rowIndex="0" />
-        <TextField fx:id="userField"
-              GridPane.columnIndex="1" GridPane.rowIndex="0" />
-        <Text text="password:"
-              GridPane.columnIndex="0" GridPane.rowIndex="1" />
-        <PasswordField fx:id="passField"
+<GridPane fx:id = "rootPane" fx:controller="Scenes.FXMLLoginController" xmlns:fx="http://javafx.com/fxml" alignment="CENTER" hgap="5" vgap="5">
+    <padding><Insets top="10" right="10" bottom="10" left="10"/> </padding>
+    <Text text="username:"
+          GridPane.columnIndex="0" GridPane.rowIndex="0" />
+    <TextField fx:id="userField"
+               GridPane.columnIndex="1" GridPane.rowIndex="0" />
+    <Text text="password:"
+          GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <PasswordField fx:id="passField"
                    GridPane.columnIndex="1" GridPane.rowIndex="1" />
-        <Button text="New User"
-              GridPane.columnIndex="0" GridPane.rowIndex="2"
-              onAction="#handleNewUserButton"/>
-        <Button text="Login"
-                GridPane.columnIndex="1" GridPane.rowIndex="2"
-                onAction="#handleLoginButton"/>
-    </GridPane>
-
-
+    <Button text="New User"
+            GridPane.columnIndex="0" GridPane.rowIndex="2"
+            onAction="#handleNewUserButton"/>
+    <Button text="Login"
+            GridPane.columnIndex="1" GridPane.rowIndex="2"
+            onAction="#handleLoginButton"/>
+</GridPane>

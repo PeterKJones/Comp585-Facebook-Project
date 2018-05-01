@@ -2,7 +2,9 @@ package Scenes;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -12,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.awt.*;
 import java.io.File;
@@ -21,8 +24,7 @@ import java.util.ResourceBundle;
 
 
 public class FXMLProfileController implements Initializable {
-
-    private Stage stg;
+    Window theStage;
     final FileChooser fileChooser = new FileChooser();
     private Desktop desktop;
 
@@ -46,22 +48,30 @@ public class FXMLProfileController implements Initializable {
     @FXML ComboBox<String> levelOfEduBox;
     @FXML TextField aboutMeField;
     @FXML Button browseButton;
+    @FXML public Button confirmButton;
 
     public FXMLProfileController(){
 
 
-
     }
-
 
     @FXML
     void handleBrowseButton(ActionEvent e){
-        File file = fileChooser.showOpenDialog(stg);
+        File file = fileChooser.showOpenDialog(theStage);
         if (file != null) {
             openFile(file);
         }
     }
+    @FXML
+    void handleConfirmButton(ActionEvent e) throws IOException{
+        Node source = (Node) e.getSource();
+        theStage = source.getScene().getWindow();
+        SplitPane pane = FXMLLoader.load(getClass().getResource("Home.fxml"));
+        theStage.setHeight(500);
+        theStage.setWidth(800);
 
+        profileGridPane.getChildren().setAll(pane);
+    }
     private void openFile(File file) {
         desktop = Desktop.getDesktop();
         try {
@@ -76,5 +86,6 @@ public class FXMLProfileController implements Initializable {
         {
             ageBox.getItems().add(String.valueOf(i));
         }
+        levelOfEduBox.getItems().addAll("None","Some High School","High School","College Undergraduate","College Graduate","PhD");
     }
 }

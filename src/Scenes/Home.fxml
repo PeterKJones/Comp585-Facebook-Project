@@ -15,6 +15,53 @@
 <?import javafx.scene.control.ComboBox?>
 
 <?import javafx.scene.control.RadioButton?>
+
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<SplitPane fx:id="splitPane" fx:controller="Scenes.FXMLHomeController" xmlns:fx="http://javafx.com/fxml">
+    <items>
+        <BorderPane fx:id="leftBP" prefWidth="120">
+           <left>
+                <VBox fx:id="leftTopVB" prefWidth="120">
+                    <padding><Insets topRightBottomLeft="10"/> </padding>
+                    <ImageView fx:id="avatarImageV">
+
+                        <Image fx:id="avatarImage" url="@/Images/fbl_default.png" requestedWidth="80" requestedHeight="80"/>
+
+                    </ImageView>
+                    <Text fx:id="ageLabel" text="Age:"/>
+                    <Text fx:id="statusLabel" text="Status:"/>
+                </VBox>
+            </left>
+            <bottom>
+                <VBox fx:id="leftBottomVB">
+                    <Button fx:id="SettingsButton" text="Settings"
+                            onAction="#handleSettingsButton"/>
+                </VBox>
+
+            </bottom>
+        </BorderPane>
+        <BorderPane fx:id="middleBP" prefWidth="560">
+            <left>
+                <VBox fx:id="topMiddleVB" alignment="TOP_CENTER">
+                    <Text text="Hello"></Text>
+                </VBox>
+            </left>
+            <bottom>
+                <VBox fx:id="bottomMiddleVB">
+                    <Button fx:id="writeMsgButton" text="Write Message"
+                            onAction="#handleSettingsButton"/>
+                </VBox>
+
+            </bottom>
+        </BorderPane>
+    </items>
+</SplitPane>
+<!--
 <GridPane fx:id="profileGridPane" fx:controller="Scenes.FXMLProfileController" xmlns:fx="http://javafx.com/fxml" alignment="CENTER" hgap="5"
           vgap="5" minWidth="400" minHeight="10000">
     <padding><Insets top="10" right="10" bottom="10" left="10"/> </padding>
@@ -67,4 +114,5 @@
             onAction="#handleConfirmButton"/>
 
 </GridPane>
+-->
 
