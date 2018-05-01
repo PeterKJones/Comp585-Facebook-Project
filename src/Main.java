@@ -12,7 +12,9 @@ public class Main extends Application
 	LoginPage loginPage;
 	ProfileCreation profileCreation;
 	ProfileScene profileScene;
-	SettingsScene settingsScene;
+	ProfileCreation settingsCreation;
+	ProfileScene settingsScene;
+	//SettingsScene settingsScene;
 	
 	public static void main(String[] args)
 	{
@@ -39,18 +41,20 @@ public class Main extends Application
 		loginPage = new LoginPage();
 		profileCreation = new ProfileCreation(mainWindow);
 		profileScene = new ProfileScene();
-		settingsScene = new SettingsScene(mainWindow);
+		settingsCreation = new ProfileCreation(mainWindow,true);
 		
 	}
 	
 	public void connectScenes(Stage mainWindow)
 	{
 		loginPage.loginButton.setOnAction(e -> mainWindow.setScene(profileCreation.getScene())); //temporary guaranteed move to profile Creation. CHANGE THIS LATER
+		profileCreation.confirmButton.setOnAction(e -> mainWindow.setScene(loginPage.getScene()));
 		profileCreation.confirmButton.setOnAction(e -> mainWindow.setScene(profileScene.getScene()));
-		profileScene.settingsButton.setOnAction(e -> mainWindow.setScene(settingsScene.getScene()));
+		profileScene.settingsButton.setOnAction(e -> mainWindow.setScene(settingsCreation.getScene()));
 		profileScene.logoutButton.setOnAction(e -> mainWindow.setScene(loginPage.getScene()));
-		settingsScene.confirmButton.setOnAction(e -> mainWindow.setScene(profileScene.getScene()));
+		settingsCreation.confirmButton.setOnAction(e -> mainWindow.setScene(profileScene.getScene()));
 		//still need to setup all button actions for profile scene
+
 	}
 	
 }
