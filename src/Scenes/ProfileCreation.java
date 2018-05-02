@@ -9,7 +9,12 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -26,7 +31,15 @@ public class ProfileCreation
 	public Button confirmButton;
 	public Button browseButton;
 	final FileChooser fileChooser = new FileChooser();
-	
+	public ToggleGroup genderGroup;
+	public TextField fNameField;
+	public TextField lNameField;
+	public TextField usernameField;
+	public PasswordField passwordField;
+	public ComboBox<String> ageBox;
+	public TextField locationField;
+	public ComboBox<String> levOfEduBox;
+	public TextField aboutMeField;
 	public ProfileCreation(Stage mainWindow)
 	{
 
@@ -60,6 +73,8 @@ public class ProfileCreation
 
 	public void updateGridPane(Stage mainWindow){
 		//left column
+		Text username = new Text("Username: ");
+		Text password = new Text("Password: ");
 		Text firstName = new Text("First Name: ");
 		Text lastName = new Text("Last Name: ");
 		Text age = new Text("Age: ");
@@ -70,22 +85,25 @@ public class ProfileCreation
 		Text profileImage = new Text("Profile Picture: ");
 
 		//right column
-		TextField fNameField = new TextField();
-		TextField lNameField = new TextField();
-		ComboBox<String> ageBox = new ComboBox<String>();
+		usernameField = new TextField();
+		passwordField = new PasswordField();
+		 fNameField = new TextField();
+		 lNameField = new TextField();
+
+		 ageBox = new ComboBox<String>();
 		for (int i = 1; i <= 100; i++) //populates the age box for ages 1 to 100
 		{
 			ageBox.getItems().add(String.valueOf(i));
 		}
-		ToggleGroup genderGroup = new ToggleGroup();
+		genderGroup = new ToggleGroup();
 		RadioButton genderMale = new RadioButton("Male");
 		genderMale.setToggleGroup(genderGroup);
 		RadioButton genderFemale = new RadioButton("Female");
 		genderFemale.setToggleGroup(genderGroup);
-		TextField locationField = new TextField();
-		ComboBox<String> levOfEduBox = new ComboBox<String>();
+		locationField = new TextField();
+		levOfEduBox = new ComboBox<String>();
 		levOfEduBox.getItems().addAll("None","Some High School","High School","College Undergraduate","College Graduate","PhD");
-		TextField aboutMeField = new TextField();
+		aboutMeField = new TextField();
 		browseButton = new Button("Browse");
 
 		browseButton.setOnAction(
