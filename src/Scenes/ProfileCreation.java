@@ -134,6 +134,8 @@ public class ProfileCreation
 		gridPane.add(education, 0, 6 + rwSettings);
 		gridPane.add(aboutMe, 0, 7 + rwSettings);
 		gridPane.add(profileImage, 0, 8 + rwSettings);
+		gridPane.add(username, 0 , 9);
+		gridPane.add(password, 0 , 10);
 
 
 		gridPane.add(fNameField, 1, 0 + rwSettings);
@@ -144,7 +146,9 @@ public class ProfileCreation
 		gridPane.add(locationField, 1, 5 + rwSettings);
 		gridPane.add(levOfEduBox, 1, 6 + rwSettings);
 		gridPane.add(aboutMeField, 1, 7 + rwSettings);
-		gridPane.add(browseButton, 1, 8 + rwSettings);
+		gridPane.add(usernameField, 1, 9 + rwSettings);
+		gridPane.add(passwordField, 1 , 10 + rwSettings);
+		gridPane.add(browseButton, 1, 11 + rwSettings);
 
 	}
 
