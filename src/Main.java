@@ -82,7 +82,7 @@ public class Main extends Application
 			profileScene.settingsButton.setOnAction(e -> mainWindow.setScene(settingsScene.getScene()));
 			profileScene.logoutButton.setOnAction(e -> mainWindow.setScene(loginPage.getScene()));
 			profileScene.logoutButton.setOnAction(e -> mainWindow.setScene(loginPage.getScene()));
-			settingsScene.confirmButton.setOnAction(e -> mainWindow.setScene(profileScene.getScene()));
+			//settingsScene.confirmButton.setOnAction(e -> mainWindow.setScene(profileScene.getScene()));
 			loginPage.newUserButton.setOnAction(e -> mainWindow.setScene(profileCreation.getScene()));
 		}
 		catch(Exception e){
