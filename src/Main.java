@@ -92,8 +92,8 @@ public class Main extends Application
 		profileScene.logoutButton.setOnAction(e -> mainWindow.setScene(loginPage.getScene()));
 		profileScene.settingsButton.setOnAction(e -> mainWindow.setScene(settingsCreation.getScene()));
 		profileCreation.confirmButton.setOnAction(e -> mainWindow.setScene(profileScene.getScene()));
-		profileCreation.confirmButton.setOnAction(e -> mainWindow.setScene(loginPage.getScene()));
-		loginPage.loginButton.setOnAction(e -> mainWindow.setScene(profileCreation.getScene())); //temporary guaranteed move to profile Creation. CHANGE THIS LATER
+//		profileCreation.confirmButton.setOnAction(e -> mainWindow.setScene(loginPage.getScene()));
+//		loginPage.loginButton.setOnAction(e -> mainWindow.setScene(profileCreation.getScene())); //temporary guaranteed move to profile Creation. CHANGE THIS LATER
 		//still need to setup all button actions for profile scene
 
 	}
