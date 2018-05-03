@@ -146,9 +146,10 @@ public class ProfileCreation
 		gridPane.add(locationField, 1, 5 + rwSettings);
 		gridPane.add(levOfEduBox, 1, 6 + rwSettings);
 		gridPane.add(aboutMeField, 1, 7 + rwSettings);
+		gridPane.add(browseButton, 1, 8 + rwSettings);
 		gridPane.add(usernameField, 1, 9 + rwSettings);
 		gridPane.add(passwordField, 1 , 10 + rwSettings);
-		gridPane.add(browseButton, 1, 11 + rwSettings);
+
 
 	}
 
@@ -170,7 +171,7 @@ public class ProfileCreation
 
 	private void addConfirmButton(){
 		confirmButton = new Button("Confirm");
-		gridPane.add(confirmButton, 1, 9 + rwSettings);
+		gridPane.add(confirmButton, 1, 11 + rwSettings);
 	}
 	public Scene getScene()
 	{

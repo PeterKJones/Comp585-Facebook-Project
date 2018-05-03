@@ -63,7 +63,7 @@ public class Main extends Application
 		try{
 			loginPage.loginButton.setOnAction(e -> {
 				try {
-					login(loginPage.userField.getText(), loginPage.passField.getText());
+					login(loginPage.userField.getText(), loginPage.passField.getText(),mainWindow);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -132,7 +132,7 @@ public class Main extends Application
 		statement.executeUpdate();
 	}
 
-	public void login(String user, String pass) throws Exception{
+	public void login(String user, String pass, Stage s) throws Exception{
 		System.out.println("username: " + user);
 		System.out.println("password: " + pass);
 		Connection connect = getConnection();
@@ -146,9 +146,10 @@ public class Main extends Application
 		System.out.println("ID: " + result.getString("id"));
 		System.out.println("Name: " + result.getString("first_name"));
 		System.out.println("Username: " + result.getString("username"));
-		System.out.println("Password: " + result.getString("password"));
-
         account = new Account(Integer.parseInt(result.getString("id")));
+		System.out.println("Password: " + result.getString("password"));;
+		s.setScene(profileScene.getScene());
+
 		//Should return id or something to save who the current user is
 	}
 
