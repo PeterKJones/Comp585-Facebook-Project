@@ -37,14 +37,7 @@ public class Profile
 		this.friendVis = friendVis;
 		this.postVis = postVis;
     }
-
-    public int getId(){
-    	return id;
-	}
-
-	public String getUsername(){
-    	retur
-	}
+    
 
 	public Profile(String firstName, String lastName, int age) //RELIC CONSTRUCTOR. SHOULD BE REMOVED EVENTUALLY
 	{

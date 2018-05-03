@@ -203,7 +203,7 @@ public class Main extends Application
                 Integer.parseInt(result.getString("friend_visibility")),
                 Integer.parseInt(result.getString("post_visibility"))
         );
-        
+
         account = new Account(
                 result.getString("username"),
                 result.getString("password"),
