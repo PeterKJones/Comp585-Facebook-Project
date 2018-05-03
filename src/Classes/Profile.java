@@ -1,5 +1,7 @@
 package Classes;
 
+import java.util.ArrayList;
+
 public class Profile
 {
 	String firstName;
@@ -14,7 +16,7 @@ public class Profile
 	boolean friendVis;
 	boolean postVis;
 	String profileImage;
-	Post[] posts;
+	ArrayList<Post> posts;
     
     public Profile(String firstName , String lastName , int age)
     {

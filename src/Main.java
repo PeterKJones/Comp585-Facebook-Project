@@ -1,3 +1,6 @@
+import Classes.Account;
+import Classes.Post;
+import Classes.Profile;
 import Scenes.LoginPage;
 import Scenes.ProfileCreation;
 import Scenes.ProfileScene;
@@ -6,6 +9,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+
 import static java.util.Objects.isNull;
 import javafx.application.Application;
 import javafx.scene.control.RadioButton;
@@ -15,7 +20,9 @@ import javafx.stage.Stage;
 
 public class Main extends Application
 {
-	LoginPage loginPage;
+    public Account account;
+
+    LoginPage loginPage;
 	ProfileCreation profileCreation;
 	ProfileScene profileScene;
 	ProfileCreation settingsCreation;
@@ -30,8 +37,8 @@ public class Main extends Application
 	@Override
 	public void start(Stage mainWindow) throws Exception
 	{
-		
-		
+
+
 		mainWindow.setTitle("Facebook Lite");
 		mainWindow.getIcons().add(new Image("Images/fbl_main_icon.png"));
 		
@@ -140,8 +147,49 @@ public class Main extends Application
 		System.out.println("Name: " + result.getString("first_name"));
 		System.out.println("Username: " + result.getString("username"));
 		System.out.println("Password: " + result.getString("password"));
+
+        account = new Account(Integer.parseInt(result.getString("id")));
 		//Should return id or something to save who the current user is
 	}
+
+	public ArrayList<Post> getAllPosts() throws Exception{
+	    System.out.println("Getting Posts...");
+        Connection connect = getConnection();
+        PreparedStatement statement = connect.prepareStatement("SELECT * FROM posts");
+        ResultSet result = statement.executeQuery();
+        ArrayList<Post> posts = new ArrayList<>();
+        while(result.next()){
+            Post currentPost = new Post(
+                    result.getString("message"),
+                    Integer.parseInt(result.getString("id"))
+            );
+            posts.add(currentPost);
+        }
+        return posts;
+    }
+
+    public ArrayList<Profile> getCurrentUserFriends() throws Exception{
+	    System.out.println("Getting Current User's Friends...");
+        Connection connect = getConnection();
+        //Query for all friends of current user
+        PreparedStatement statement = connect.prepareStatement("SELECT * FROM friends WHERE user_id=" + "'" + account.getId() + "'");
+        ResultSet result = statement.executeQuery();
+        ArrayList<Profile> profiles = new ArrayList<>();
+        while(result.next()){
+            //Another query for each friend using friend_id
+            PreparedStatement statement2 = connect.prepareStatement("SELECT * FROM users WHERE id=" + "'" + result.getString("friend_id") + "'");
+            ResultSet result2 = statement.executeQuery();
+            //Create a profile for each user that corresponds to a friend_id from initial query
+            Profile currentProfile = new Profile(
+                    result2.getString("first_name"),
+                    result2.getString("last_name"),
+                    Integer.parseInt(result2.getString("age"))
+            );
+            //Save that profile to the ArrayList<Profile>
+            profiles.add(currentProfile);
+        }
+        return profiles;
+    }
 
 	public Connection getConnection() throws Exception{
 		try{
