@@ -7,21 +7,21 @@ public class Profile
 	String firstName;
 	String lastName;
 	int age;
-	Gender gender;
+	String gender;
 	String location;
 	String education;
 	String aboutMe;
 	String profileImage;
 	ArrayList<Profile> friends;
 	ArrayList<Post> posts;
-	boolean ageVis;
-	boolean friendVis;
-	boolean postVis;
+	int ageVis;
+	int friendVis;
+	int postVis;
 
 
     
-    public Profile(String firstName , String lastName , int age, Gender gender, String location, String education, String aboutMe,
-				   String profileImage, ArrayList<Profile> friends, ArrayList<Post> posts, boolean ageVis, boolean friendVis, boolean postVis)
+    public Profile(String firstName , String lastName , int age, String gender, String location, String education, String aboutMe,
+				   String profileImage, ArrayList<Profile> friends, ArrayList<Post> posts, int ageVis, int friendVis, int postVis)
     {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -37,6 +37,14 @@ public class Profile
 		this.friendVis = friendVis;
 		this.postVis = postVis;
     }
+
+    public int getId(){
+    	return id;
+	}
+
+	public String getUsername(){
+    	retur
+	}
 
 	public Profile(String firstName, String lastName, int age) //RELIC CONSTRUCTOR. SHOULD BE REMOVED EVENTUALLY
 	{

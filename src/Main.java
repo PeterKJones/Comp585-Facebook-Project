@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 public class Main extends Application
 {
     public Account account; //MAY BE USELESS soon.
+    public Profile profile;
 
     LoginPage loginPage;
 	ProfileCreation profileCreation;
@@ -112,14 +113,32 @@ public class Main extends Application
 		//=========If all fields are filled (not null), account creation goes here (could be where this method is called too. up to you.==========
 		//generate the profile object here with the fully filled form
 		//Profile profile = new Profile(firstname, lastname, blah blah blah)
+		    profile = new Profile(
+		        firstName,
+                lastName,
+                age,
+                gender,
+                location,
+                education,
+                "Im new to Facebook Lite",
+                "Images/fbl_default.png",
+                getCurrentUserFriends(),
+                getAllPosts(),
+                1,
+                1,
+                1
+            );
+
+		    //CANNOT MAKE ACCOUNT HERE, WOULD REQUIRE ANOTHER QUERY AFTER INSERT. JUST REDIRECT NEW USER TO LOGIN.
+
+
 		//We're leaving account declared above because it will likely be referenced later on in other events in Main. so don't declare a local variable here
 		//Below, I'm calling a constructor that I just made for the account instantiating.
-		//account = new Account(profile.username, profile.password, profile, profile.id);
 		//Now that both the account and profile objects are made, push the data for the profile to the database, which I beleive you already did below. Don't worry about doing that with the account.
 		//it's not necessary since the account will be generated locally each time when we pull from the database in case #1(case 1: login, case 2: create new user(which is this))
 
 		String status = "Just joined Facebook Lite!";
-		String image = "default.jpg";
+		String image = "Images/fbl_default.png";
 
 		PreparedStatement statement = connect.prepareStatement(
 				"INSERT INTO users (" +
@@ -168,7 +187,30 @@ public class Main extends Application
 		s.setScene(profileScene.getScene());
 
 		//Should return id or something to save who the current user is
-	}
+
+        profile = new Profile(
+                result.getString("first_name"),
+                result.getString("last_name"),
+                Integer.parseInt(result.getString("age")),
+                result.getString("gender"),
+                result.getString("location"),
+                result.getString("education"),
+                result.getString("bio"),
+                result.getString("image"),
+                getCurrentUserFriends(),
+                getAllPosts(),
+                Integer.parseInt(result.getString("age_visibility")),
+                Integer.parseInt(result.getString("friend_visibility")),
+                Integer.parseInt(result.getString("post_visibility"))
+        );
+        
+        account = new Account(
+                result.getString("username"),
+                result.getString("password"),
+                profile, Integer.parseInt(result.getString("id"))
+        );
+
+    }
 
 	public ArrayList<Post> getAllPosts() throws Exception{
 	    System.out.println("Getting Posts...");
