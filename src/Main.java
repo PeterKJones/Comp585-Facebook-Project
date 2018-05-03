@@ -4,14 +4,13 @@ import Classes.Profile;
 import Scenes.LoginPage;
 import Scenes.ProfileCreation;
 import Scenes.ProfileScene;
-import Scenes.SettingsScene;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import static java.util.Objects.isNull;
 import javafx.application.Application;
 import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
@@ -20,7 +19,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application
 {
-    public Account account;
+    public Account account; //MAY BE USELESS soon.
 
     LoginPage loginPage;
 	ProfileCreation profileCreation;
@@ -43,9 +42,10 @@ public class Main extends Application
 		mainWindow.getIcons().add(new Image("Images/fbl_main_icon.png"));
 		
 		initializeScenes(mainWindow);
-		connectScenes(mainWindow);
+		initializeEvents(mainWindow);
 		
 		mainWindow.setScene(loginPage.getScene()); //Should initialize to the login page every time. May be set otherwise for testing purposes.
+		mainWindow.setResizable(false);
 		mainWindow.show();
 	}
 
@@ -58,16 +58,31 @@ public class Main extends Application
 		
 	}
 
-	public void connectScenes(Stage mainWindow) throws Exception
+	public void initializeEvents(Stage mainWindow) throws Exception
 	{
-		try{
-			loginPage.loginButton.setOnAction(e -> {
-				try {
-					login(loginPage.userField.getText(), loginPage.passField.getText(),mainWindow);
-				} catch (Exception e1) {
-					e1.printStackTrace();
+			loginPage.loginButton.setOnAction(e ->
+			{
+				String userField = loginPage.userField.getText();
+				String passField = loginPage.passField.getText();
+				if (userField.isEmpty() == true || userField == null)
+				{
+					loginPage.errorNotif.setText("Please enter a username.");
 				}
-			}); //temporary guaranteed move to profile Creation. CHANGE THIS LATER
+				else if (passField.isEmpty() == true || passField == null)
+				{
+					loginPage.errorNotif.setText("Please enter a password.");
+				}
+				else
+				{
+					try
+					{
+						login(userField, passField, mainWindow);
+					} catch (Exception e1)
+					{
+						e1.printStackTrace();
+					}
+				}
+			});
 			profileCreation.confirmButton.setOnAction(e -> {
 				try {
 					RadioButton gender = (RadioButton)profileCreation.genderGroup.getSelectedToggle(); //Needed to cast as radiobutton, then getText() later.
@@ -88,25 +103,21 @@ public class Main extends Application
 			});
 			profileScene.settingsButton.setOnAction(e -> mainWindow.setScene(settingsScene.getScene()));
 			profileScene.logoutButton.setOnAction(e -> mainWindow.setScene(loginPage.getScene()));
-			profileScene.logoutButton.setOnAction(e -> mainWindow.setScene(loginPage.getScene()));
-			//settingsScene.confirmButton.setOnAction(e -> mainWindow.setScene(profileScene.getScene()));
 			loginPage.newUserButton.setOnAction(e -> mainWindow.setScene(profileCreation.getScene()));
-		}
-		catch(Exception e){
-			System.out.println(e);
-		}
-		settingsCreation.confirmButton.setOnAction(e -> mainWindow.setScene(profileScene.getScene()));
-		profileScene.logoutButton.setOnAction(e -> mainWindow.setScene(loginPage.getScene()));
-		profileScene.settingsButton.setOnAction(e -> mainWindow.setScene(settingsCreation.getScene()));
-//		profileCreation.confirmButton.setOnAction(e -> mainWindow.setScene(profileScene.getScene()));
-//		profileCreation.confirmButton.setOnAction(e -> mainWindow.setScene(loginPage.getScene()));
-//		loginPage.loginButton.setOnAction(e -> mainWindow.setScene(profileCreation.getScene())); //temporary guaranteed move to profile Creation. CHANGE THIS LATER
-		//still need to setup all button actions for profile scene
-
 	}
 
 	public void createUser (String username, String password, String firstName, String lastName, String about, String location, String gender, int age, String education) throws Exception{
 		Connection connect = getConnection();
+
+		//=========If all fields are filled (not null), account creation goes here (could be where this method is called too. up to you.==========
+		//generate the profile object here with the fully filled form
+		//Profile profile = new Profile(firstname, lastname, blah blah blah)
+		//We're leaving account declared above because it will likely be referenced later on in other events in Main. so don't declare a local variable here
+		//Below, I'm calling a constructor that I just made for the account instantiating.
+		//account = new Account(profile.username, profile.password, profile, profile.id);
+		//Now that both the account and profile objects are made, push the data for the profile to the database, which I beleive you already did below. Don't worry about doing that with the account.
+		//it's not necessary since the account will be generated locally each time when we pull from the database in case #1(case 1: login, case 2: create new user(which is this))
+
 		String status = "Just joined Facebook Lite!";
 		String image = "default.jpg";
 
@@ -142,6 +153,12 @@ public class Main extends Application
 			System.out.println("Incorrect Credentials");
 			return;
 		}
+		//================================At this point, i'm assuming the login credentials are correct. If that's true,
+		// We need to set the account  and the profile to what the user logged in with.
+		// Pull from the database here, the user dataset related to the username and password, then create a temporary profile with that. (using Profile tempProfile = new Profile(<insert data pulled from DB into this constructor>)
+		// We will call this tempProfile, a temp ArrayList<Profile>, and a temp ArrayList<Post>. the array lists will be pushed into tempProfile and then tempProfile will be passed to the tempaccount below.
+		// Account tempAccount = new Account(user, pass, tempProfile, tempProfile.id);
+		// I believe that's all. Make sure that all the parameters in the Profile.java class are entries in the users dataset on the DB.
 		int id = result.getInt("id");
 		System.out.println("ID: " + result.getString("id"));
 		System.out.println("Name: " + result.getString("first_name"));

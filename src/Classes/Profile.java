@@ -8,18 +8,40 @@ public class Profile
 	String lastName;
 	int age;
 	Gender gender;
-	String Location;
+	String location;
 	String education;
 	String aboutMe;
-	Profile[] newFriends; //Should be renamed to friends once we get rid of old code.
+	String profileImage;
+	ArrayList<Profile> friends;
+	ArrayList<Post> posts;
 	boolean ageVis;
 	boolean friendVis;
 	boolean postVis;
-	String profileImage;
-	ArrayList<Post> posts;
-    
-    public Profile(String firstName , String lastName , int age)
-    {
 
+
+    
+    public Profile(String firstName , String lastName , int age, Gender gender, String location, String education, String aboutMe,
+				   String profileImage, ArrayList<Profile> friends, ArrayList<Post> posts, boolean ageVis, boolean friendVis, boolean postVis)
+    {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.age = age;
+		this.gender = gender;
+		this.location = location;
+		this.education = education;
+		this.aboutMe = aboutMe;
+		this.profileImage = profileImage;
+		this.friends = friends;
+		this.posts = posts;
+		this.ageVis = ageVis;
+		this.friendVis = friendVis;
+		this.postVis = postVis;
     }
+
+	public Profile(String firstName, String lastName, int age) //RELIC CONSTRUCTOR. SHOULD BE REMOVED EVENTUALLY
+	{
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.age = age;
+	}
 }
