@@ -184,7 +184,6 @@ public class Main extends Application
 		System.out.println("Username: " + result.getString("username"));
         account = new Account(Integer.parseInt(result.getString("id")));
 		System.out.println("Password: " + result.getString("password"));;
-		s.setScene(profileScene.getScene());
 
 		//Should return id or something to save who the current user is
 
@@ -210,7 +209,9 @@ public class Main extends Application
                 profile, Integer.parseInt(result.getString("id"))
         );
 
-    }
+		s.setScene(profileScene.getScene());
+
+	}
 
 	public ArrayList<Post> getAllPosts() throws Exception{
 	    System.out.println("Getting Posts...");
