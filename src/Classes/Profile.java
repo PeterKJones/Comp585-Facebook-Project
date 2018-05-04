@@ -9,12 +9,13 @@ public class Profile
 	String Location;
 	String education;
 	String aboutMe;
-	Profile[] newFriends; //Should be renamed to friends once we get rid of old code.
+	Profile[] friends; //Array of other profiles, people youve friend. pull avatar, name, maybe even piece of their status
+						//when someone clicks on
 	boolean ageVis;
 	boolean friendVis;
 	boolean postVis;
 	String profileImage;
-	Post[] posts;
+	Post[] posts; //Array of all posts this user has made
     
     public Profile(String firstName , String lastName , int age)
     {
