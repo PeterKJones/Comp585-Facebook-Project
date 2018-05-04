@@ -1,12 +1,16 @@
+import Classes.Account;
+import Classes.Post;
+import Classes.Profile;
 import Scenes.LoginPage;
 import Scenes.ProfileCreation;
 import Scenes.ProfileScene;
-import Scenes.SettingsScene;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import static java.util.Objects.isNull;
+import java.util.ArrayList;
+
 import javafx.application.Application;
 import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
@@ -15,7 +19,10 @@ import javafx.stage.Stage;
 
 public class Main extends Application
 {
-	LoginPage loginPage;
+    public Account account; //MAY BE USELESS soon.
+    public Profile profile;
+
+    LoginPage loginPage;
 	ProfileCreation profileCreation;
 	ProfileScene profileScene;
 	ProfileCreation settingsCreation;
@@ -30,15 +37,16 @@ public class Main extends Application
 	@Override
 	public void start(Stage mainWindow) throws Exception
 	{
-		
-		
+
+
 		mainWindow.setTitle("Facebook Lite");
 		mainWindow.getIcons().add(new Image("Images/fbl_main_icon.png"));
 		
 		initializeScenes(mainWindow);
-		connectScenes(mainWindow);
+		initializeEvents(mainWindow);
 		
 		mainWindow.setScene(loginPage.getScene()); //Should initialize to the login page every time. May be set otherwise for testing purposes.
+		mainWindow.setResizable(false);
 		mainWindow.show();
 	}
 
@@ -51,16 +59,31 @@ public class Main extends Application
 		
 	}
 
-	public void connectScenes(Stage mainWindow) throws Exception
+	public void initializeEvents(Stage mainWindow) throws Exception
 	{
-		try{
-			loginPage.loginButton.setOnAction(e -> {
-				try {
-					login(loginPage.userField.getText(), loginPage.passField.getText());
-				} catch (Exception e1) {
-					e1.printStackTrace();
+			loginPage.loginButton.setOnAction(e ->
+			{
+				String userField = loginPage.userField.getText();
+				String passField = loginPage.passField.getText();
+				if (userField.isEmpty() == true || userField == null)
+				{
+					loginPage.errorNotif.setText("Please enter a username.");
 				}
-			}); //temporary guaranteed move to profile Creation. CHANGE THIS LATER
+				else if (passField.isEmpty() == true || passField == null)
+				{
+					loginPage.errorNotif.setText("Please enter a password.");
+				}
+				else
+				{
+					try
+					{
+						login(userField, passField, mainWindow);
+					} catch (Exception e1)
+					{
+						e1.printStackTrace();
+					}
+				}
+			});
 			profileCreation.confirmButton.setOnAction(e -> {
 				try {
 					RadioButton gender = (RadioButton)profileCreation.genderGroup.getSelectedToggle(); //Needed to cast as radiobutton, then getText() later.
@@ -81,27 +104,41 @@ public class Main extends Application
 			});
 			profileScene.settingsButton.setOnAction(e -> mainWindow.setScene(settingsScene.getScene()));
 			profileScene.logoutButton.setOnAction(e -> mainWindow.setScene(loginPage.getScene()));
-			profileScene.logoutButton.setOnAction(e -> mainWindow.setScene(loginPage.getScene()));
-			//settingsScene.confirmButton.setOnAction(e -> mainWindow.setScene(profileScene.getScene()));
 			loginPage.newUserButton.setOnAction(e -> mainWindow.setScene(profileCreation.getScene()));
-		}
-		catch(Exception e){
-			System.out.println(e);
-		}
-		settingsCreation.confirmButton.setOnAction(e -> mainWindow.setScene(profileScene.getScene()));
-		profileScene.logoutButton.setOnAction(e -> mainWindow.setScene(loginPage.getScene()));
-		profileScene.settingsButton.setOnAction(e -> mainWindow.setScene(settingsCreation.getScene()));
-		profileCreation.confirmButton.setOnAction(e -> mainWindow.setScene(profileScene.getScene()));
-//		profileCreation.confirmButton.setOnAction(e -> mainWindow.setScene(loginPage.getScene()));
-//		loginPage.loginButton.setOnAction(e -> mainWindow.setScene(profileCreation.getScene())); //temporary guaranteed move to profile Creation. CHANGE THIS LATER
-		//still need to setup all button actions for profile scene
-
 	}
 
 	public void createUser (String username, String password, String firstName, String lastName, String about, String location, String gender, int age, String education) throws Exception{
 		Connection connect = getConnection();
+
+		//=========If all fields are filled (not null), account creation goes here (could be where this method is called too. up to you.==========
+		//generate the profile object here with the fully filled form
+		//Profile profile = new Profile(firstname, lastname, blah blah blah)
+		    profile = new Profile(
+		        firstName,
+                lastName,
+                age,
+                gender,
+                location,
+                education,
+                "Im new to Facebook Lite",
+                "Images/fbl_default.png",
+                getCurrentUserFriends(),
+                getAllPosts(),
+                1,
+                1,
+                1
+            );
+
+		    //CANNOT MAKE ACCOUNT HERE, WOULD REQUIRE ANOTHER QUERY AFTER INSERT. JUST REDIRECT NEW USER TO LOGIN.
+
+
+		//We're leaving account declared above because it will likely be referenced later on in other events in Main. so don't declare a local variable here
+		//Below, I'm calling a constructor that I just made for the account instantiating.
+		//Now that both the account and profile objects are made, push the data for the profile to the database, which I beleive you already did below. Don't worry about doing that with the account.
+		//it's not necessary since the account will be generated locally each time when we pull from the database in case #1(case 1: login, case 2: create new user(which is this))
+
 		String status = "Just joined Facebook Lite!";
-		String image = "default.jpg";
+		String image = "Images/fbl_default.png";
 
 		PreparedStatement statement = connect.prepareStatement(
 				"INSERT INTO users (" +
@@ -125,7 +162,7 @@ public class Main extends Application
 		statement.executeUpdate();
 	}
 
-	public void login(String user, String pass) throws Exception{
+	public void login(String user, String pass, Stage s) throws Exception{
 		System.out.println("username: " + user);
 		System.out.println("password: " + pass);
 		Connection connect = getConnection();
@@ -135,13 +172,85 @@ public class Main extends Application
 			System.out.println("Incorrect Credentials");
 			return;
 		}
+		//================================At this point, i'm assuming the login credentials are correct. If that's true,
+		// We need to set the account  and the profile to what the user logged in with.
+		// Pull from the database here, the user dataset related to the username and password, then create a temporary profile with that. (using Profile tempProfile = new Profile(<insert data pulled from DB into this constructor>)
+		// We will call this tempProfile, a temp ArrayList<Profile>, and a temp ArrayList<Post>. the array lists will be pushed into tempProfile and then tempProfile will be passed to the tempaccount below.
+		// Account tempAccount = new Account(user, pass, tempProfile, tempProfile.id);
+		// I believe that's all. Make sure that all the parameters in the Profile.java class are entries in the users dataset on the DB.
 		int id = result.getInt("id");
 		System.out.println("ID: " + result.getString("id"));
 		System.out.println("Name: " + result.getString("first_name"));
 		System.out.println("Username: " + result.getString("username"));
-		System.out.println("Password: " + result.getString("password"));
+        account = new Account(Integer.parseInt(result.getString("id")));
+		System.out.println("Password: " + result.getString("password"));;
+
 		//Should return id or something to save who the current user is
+
+        profile = new Profile(
+                result.getString("first_name"),
+                result.getString("last_name"),
+                Integer.parseInt(result.getString("age")),
+                result.getString("gender"),
+                result.getString("location"),
+                result.getString("education"),
+                result.getString("bio"),
+                result.getString("image"),
+                getCurrentUserFriends(),
+                getAllPosts(),
+                Integer.parseInt(result.getString("age_visibility")),
+                Integer.parseInt(result.getString("friend_visibility")),
+                Integer.parseInt(result.getString("post_visibility"))
+        );
+
+        account = new Account(
+                result.getString("username"),
+                result.getString("password"),
+                profile, Integer.parseInt(result.getString("id"))
+        );
+
+		s.setScene(profileScene.getScene());
+
 	}
+
+	public ArrayList<Post> getAllPosts() throws Exception{
+	    System.out.println("Getting Posts...");
+        Connection connect = getConnection();
+        PreparedStatement statement = connect.prepareStatement("SELECT * FROM posts");
+        ResultSet result = statement.executeQuery();
+        ArrayList<Post> posts = new ArrayList<>();
+        while(result.next()){
+            Post currentPost = new Post(
+                    result.getString("message"),
+                    Integer.parseInt(result.getString("id"))
+            );
+            posts.add(currentPost);
+        }
+        return posts;
+    }
+
+    public ArrayList<Profile> getCurrentUserFriends() throws Exception{
+	    System.out.println("Getting Current User's Friends...");
+        Connection connect = getConnection();
+        //Query for all friends of current user
+        PreparedStatement statement = connect.prepareStatement("SELECT * FROM friends WHERE user_id=" + "'" + account.getId() + "'");
+        ResultSet result = statement.executeQuery();
+        ArrayList<Profile> profiles = new ArrayList<>();
+        while(result.next()){
+            //Another query for each friend using friend_id
+            PreparedStatement statement2 = connect.prepareStatement("SELECT * FROM users WHERE id=" + "'" + result.getString("friend_id") + "'");
+            ResultSet result2 = statement.executeQuery();
+            //Create a profile for each user that corresponds to a friend_id from initial query
+            Profile currentProfile = new Profile(
+                    result2.getString("first_name"),
+                    result2.getString("last_name"),
+                    Integer.parseInt(result2.getString("age"))
+            );
+            //Save that profile to the ArrayList<Profile>
+            profiles.add(currentProfile);
+        }
+        return profiles;
+    }
 
 	public Connection getConnection() throws Exception{
 		try{

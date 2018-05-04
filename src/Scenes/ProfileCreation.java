@@ -9,13 +9,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -41,6 +35,8 @@ public class ProfileCreation
 	public TextField locationField;
 	public ComboBox<String> levOfEduBox;
 	public TextField aboutMeField;
+	public Label errorNotif;
+
 	public ProfileCreation(Stage mainWindow)
 	{
 
@@ -52,17 +48,19 @@ public class ProfileCreation
 		layout.getChildren().add(gridPane);
 		
 		scene = new Scene(layout, 400, 400);
+
 	}
 
 	public ProfileCreation(Stage mainWindow, Boolean isSettings){
 		if (isSettings){
 			rwSettings=3;
-			updateGridPane(mainWindow);
 			addSettingControls();
+			updateGridPane(mainWindow);
 		}else{
 			rwSettings=0;
 			updateGridPane(mainWindow);
 		}
+
 
 		addConfirmButton();
 		StackPane layout = new StackPane();
@@ -84,6 +82,7 @@ public class ProfileCreation
 		Text education = new Text("Level of Education: ");
 		Text aboutMe = new Text("About Me: ");
 		Text profileImage = new Text("Profile Picture: ");
+		Label errorNotif = new Label();
 
 		//right column
 		usernameField = new TextField();
@@ -134,6 +133,8 @@ public class ProfileCreation
 		gridPane.add(education, 0, 6 + rwSettings);
 		gridPane.add(aboutMe, 0, 7 + rwSettings);
 		gridPane.add(profileImage, 0, 8 + rwSettings);
+		gridPane.add(username, 0 , 9);
+		gridPane.add(password, 0 , 10);
 
 
 		gridPane.add(fNameField, 1, 0 + rwSettings);
@@ -145,6 +146,9 @@ public class ProfileCreation
 		gridPane.add(levOfEduBox, 1, 6 + rwSettings);
 		gridPane.add(aboutMeField, 1, 7 + rwSettings);
 		gridPane.add(browseButton, 1, 8 + rwSettings);
+		gridPane.add(usernameField, 1, 9 + rwSettings);
+		gridPane.add(passwordField, 1 , 10 + rwSettings);
+
 
 	}
 
@@ -166,7 +170,7 @@ public class ProfileCreation
 
 	private void addConfirmButton(){
 		confirmButton = new Button("Confirm");
-		gridPane.add(confirmButton, 1, 9 + rwSettings);
+		gridPane.add(confirmButton, 1, 11 + rwSettings);
 	}
 	public Scene getScene()
 	{

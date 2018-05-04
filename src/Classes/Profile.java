@@ -1,24 +1,50 @@
 package Classes;
 
+import java.util.ArrayList;
+
 public class Profile
 {
 	String firstName;
 	String lastName;
 	int age;
-	Gender gender;
-	String Location;
+	String gender;
+	String location;
 	String education;
 	String aboutMe;
 	Profile[] friends; //Array of other profiles, people youve friend. pull avatar, name, maybe even piece of their status
 						//when someone clicks on
-	boolean ageVis;
-	boolean friendVis;
-	boolean postVis;
 	String profileImage;
-	Post[] posts; //Array of all posts this user has made
-    
-    public Profile(String firstName , String lastName , int age)
-    {
+	ArrayList<Profile> friends;
+	ArrayList<Post> posts;
+	int ageVis;
+	int friendVis;
+	int postVis;
 
+
+    
+    public Profile(String firstName , String lastName , int age, String gender, String location, String education, String aboutMe,
+				   String profileImage, ArrayList<Profile> friends, ArrayList<Post> posts, int ageVis, int friendVis, int postVis)
+    {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.age = age;
+		this.gender = gender;
+		this.location = location;
+		this.education = education;
+		this.aboutMe = aboutMe;
+		this.profileImage = profileImage;
+		this.friends = friends;
+		this.posts = posts;
+		this.ageVis = ageVis;
+		this.friendVis = friendVis;
+		this.postVis = postVis;
     }
+    
+
+	public Profile(String firstName, String lastName, int age) //RELIC CONSTRUCTOR. SHOULD BE REMOVED EVENTUALLY
+	{
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.age = age;
+	}
 }

@@ -5,12 +5,11 @@ import java.time.LocalTime;
 public class Post
 {
 	String message;
-	String time;
+	int creatorId;
 	
-	public Post(String msg)
+	public Post(String msg, int userId)
 	{
+		creatorId = userId;
 		message = msg;
-		LocalTime temp = LocalTime.now();
-		time = temp.toString();
 	}
 }
