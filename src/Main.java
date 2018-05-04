@@ -253,6 +253,12 @@ public class Main extends Application
         return profiles;
     }
 
+    public void addFriend(int friend_id) throws Exception{
+		Connection connect = getConnection();
+		PreparedStatement statement = connect.prepareStatement("INSERT INTO friends (user_id, friend_id) VALUES ('"+account.getId()+"', '"+friend_id+"')");
+		statement.executeUpdate();
+	}
+
 	public Connection getConnection() throws Exception{
 		try{
 			String driver = "com.mysql.cj.jdbc.Driver";

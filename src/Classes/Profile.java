@@ -37,7 +37,6 @@ public class Profile
 		this.friendVis = friendVis;
 		this.postVis = postVis;
     }
-    
 
 	public Profile(String firstName, String lastName, int age) //RELIC CONSTRUCTOR. SHOULD BE REMOVED EVENTUALLY
 	{
