@@ -11,8 +11,6 @@ public class Profile
 	String location;
 	String education;
 	String aboutMe;
-	Profile[] friends; //Array of other profiles, people youve friend. pull avatar, name, maybe even piece of their status
-						//when someone clicks on
 	String profileImage;
 	ArrayList<Profile> friends;
 	ArrayList<Post> posts;

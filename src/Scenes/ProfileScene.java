@@ -14,6 +14,9 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import Classes.Post;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 public class ProfileScene
@@ -99,7 +102,7 @@ public class ProfileScene
         bottomMiddleHB.setSpacing(8);
         bottomMiddleHB.setAlignment(Pos.BOTTOM_RIGHT);
         postButton = new Button("Post");
-        postButton.setOnAction(e -> collapseMakePostComponent());
+        postButton.setOnAction(e -> PostStatus());
         cancelButton = new Button("Cancel");
         cancelButton.setOnAction(e -> collapseMakePostComponent());
         bottomMiddleHB.getChildren().addAll(postButton,cancelButton);
@@ -178,6 +181,37 @@ public class ProfileScene
         postDescription.setManaged(false);
         bottomMiddleHB.setVisible(false);
         bottomMiddleHB.setManaged(false);
+    }
+
+    private void PostStatus(){
+        try {
+            System.out.println("Posting status...");
+            Connection connect = getConnection();
+            //Query for all friends of current user
+            PreparedStatement statement = connect.prepareStatement("INSERT INTO posts (user_id, message) VALUES (3," + postDescription.getText() + ");");
+
+
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+    }
+
+    public Connection getConnection() throws Exception{
+        try{
+            String driver = "com.mysql.cj.jdbc.Driver";
+            String url = "jdbc:mysql://localhost:3306/facebooklite";
+            String username = "root";
+            String password = "";
+            Class.forName(driver);
+            Connection connect = DriverManager.getConnection(url,username,password);
+            System.out.println("Connection Established");
+            return connect;
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return null;
     }
 
 }

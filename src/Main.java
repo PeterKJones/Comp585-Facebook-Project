@@ -105,6 +105,7 @@ public class Main extends Application
 			profileScene.settingsButton.setOnAction(e -> mainWindow.setScene(settingsScene.getScene()));
 			profileScene.logoutButton.setOnAction(e -> mainWindow.setScene(loginPage.getScene()));
 			loginPage.newUserButton.setOnAction(e -> mainWindow.setScene(profileCreation.getScene()));
+
 	}
 
 	public void createUser (String username, String password, String firstName, String lastName, String about, String location, String gender, int age, String education) throws Exception{
