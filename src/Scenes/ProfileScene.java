@@ -35,9 +35,9 @@ public class ProfileScene
     private ImageView avatarImageV;
     private Image avatarImage;
     private Text ageLabel, statusLabel, statusDescription, friendsListLabel, myPostsLabel;
-    private TextArea postDescription;
+    public TextArea postDescription;
     private ArrayList<Post> postArray;
-    private Button writeMsgButton, postButton, cancelButton;
+    public Button writeMsgButton, postButton, cancelButton;
     public Button settingsButton,logoutButton;
 
 
@@ -102,7 +102,7 @@ public class ProfileScene
         bottomMiddleHB.setSpacing(8);
         bottomMiddleHB.setAlignment(Pos.BOTTOM_RIGHT);
         postButton = new Button("Post");
-        postButton.setOnAction(e -> PostStatus());
+        //postButton.setOnAction(e -> collapseMakePostComponent());
         cancelButton = new Button("Cancel");
         cancelButton.setOnAction(e -> collapseMakePostComponent());
         bottomMiddleHB.getChildren().addAll(postButton,cancelButton);
@@ -173,7 +173,7 @@ public class ProfileScene
         //Insert here: add the new post to the arraylist and database.
     }
 
-    private void collapseMakePostComponent()
+    public void collapseMakePostComponent()
     {
         writeMsgButton.setVisible(true);
         writeMsgButton.setManaged(true); //button becomes not visible and collapsed(doesnt intervene with other controls)
@@ -181,37 +181,6 @@ public class ProfileScene
         postDescription.setManaged(false);
         bottomMiddleHB.setVisible(false);
         bottomMiddleHB.setManaged(false);
-    }
-
-    private void PostStatus(){
-        try {
-            System.out.println("Posting status...");
-            Connection connect = getConnection();
-            //Query for all friends of current user
-            PreparedStatement statement = connect.prepareStatement("INSERT INTO posts (user_id, message) VALUES (3," + postDescription.getText() + ");");
-
-
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-    }
-
-    public Connection getConnection() throws Exception{
-        try{
-            String driver = "com.mysql.cj.jdbc.Driver";
-            String url = "jdbc:mysql://localhost:3306/facebooklite";
-            String username = "root";
-            String password = "";
-            Class.forName(driver);
-            Connection connect = DriverManager.getConnection(url,username,password);
-            System.out.println("Connection Established");
-            return connect;
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-        return null;
     }
 
 }

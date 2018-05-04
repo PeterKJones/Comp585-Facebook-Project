@@ -104,6 +104,7 @@ public class Main extends Application
 			});
 			profileScene.settingsButton.setOnAction(e -> mainWindow.setScene(settingsScene.getScene()));
 			profileScene.logoutButton.setOnAction(e -> mainWindow.setScene(loginPage.getScene()));
+			profileScene.postButton.setOnAction(e -> postStatus());
 			loginPage.newUserButton.setOnAction(e -> mainWindow.setScene(profileCreation.getScene()));
 
 	}
@@ -220,10 +221,12 @@ public class Main extends Application
         PreparedStatement statement = connect.prepareStatement("SELECT * FROM posts");
         ResultSet result = statement.executeQuery();
         ArrayList<Post> posts = new ArrayList<>();
+
         while(result.next()){
+
             Post currentPost = new Post(
                     result.getString("message"),
-                    Integer.parseInt(result.getString("id"))
+                    Integer.parseInt(result.getString("user_id"))
             );
             posts.add(currentPost);
         }
@@ -240,17 +243,20 @@ public class Main extends Application
         while(result.next()){
             //Another query for each friend using friend_id
             PreparedStatement statement2 = connect.prepareStatement("SELECT * FROM users WHERE id=" + "'" + result.getString("friend_id") + "'");
-            ResultSet result2 = statement.executeQuery();
+            ResultSet result2 = statement2.executeQuery();
             //Create a profile for each user that corresponds to a friend_id from initial query
-            Profile currentProfile = new Profile(
-                    result2.getString("first_name"),
-                    result2.getString("last_name"),
-                    Integer.parseInt(result2.getString("age"))
-            );
-            //Save that profile to the ArrayList<Profile>
-            profiles.add(currentProfile);
+			while(result2.next()) {
+				Profile currentProfile = new Profile(
+						result2.getString("first_name"),
+						result2.getString("last_name"),
+						Integer.parseInt(result2.getString("age"))
+				);
+				//Save that profile to the ArrayList<Profile>
+				profiles.add(currentProfile);
+			}
         }
-        return profiles;
+        //return profiles;
+		return new ArrayList<Profile>();
     }
 
     public void addFriend(int friend_id) throws Exception{
@@ -274,6 +280,26 @@ public class Main extends Application
 			System.out.println(e);
 		}
 		return null;
+	}
+
+	private void postStatus(){
+		try {
+			System.out.println("Posting status...");
+			//check to see if the string isn't null or just spaces
+			if(profileScene.postDescription.getText().trim().length() > 0) {
+				Connection connect = getConnection();
+				//"INSERT INTO posts (user_id, message) VALUES (1,'post');
+				PreparedStatement statement = connect.prepareStatement("INSERT INTO posts (user_id, message) VALUES (" + account.getId() + ",'" + profileScene.postDescription.getText() + "');");
+				statement.executeUpdate();
+				profileScene.collapseMakePostComponent();
+			}
+			else {
+				System.out.println("Post status can't be empty!");
+			}
+		}
+		catch(Exception e){
+			System.out.println(e);
+		}
 	}
 
 }
