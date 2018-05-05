@@ -1,5 +1,7 @@
 package Scenes;
 
+import Classes.Account;
+import Classes.Profile;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,10 +15,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import Classes.Post;
+import javafx.scene.text.TextAlignment;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class ProfileScene
@@ -37,9 +40,8 @@ public class ProfileScene
     private Text ageLabel, statusLabel, statusDescription, friendsListLabel, myPostsLabel;
     public TextArea postDescription;
     private ArrayList<Post> postArray;
-    public Button writeMsgButton, postButton, cancelButton;
-    public Button settingsButton,logoutButton;
-
+    private Button writeMsgButton, cancelButton;
+    public Button settingsButton,logoutButton, postButton;
 
 
     public ProfileScene()
@@ -183,4 +185,78 @@ public class ProfileScene
         bottomMiddleHB.setManaged(false);
     }
 
+    public void loadProfileToScene(int id, Profile profile)
+    {
+        /*
+        avatarImage;
+    private Text ageLabel, statusLabel, statusDescription, friendsListLabel, myPostsLabel;
+    public TextArea postDescription;
+    private ArrayList<Post> postArray;
+         */
+        //load profile stuff for a single person
+        avatarImage = new Image(profile.getProfileImage(),AVATAR_DIMENSIONS,AVATAR_DIMENSIONS,false,true);
+        ageLabel.setText(ageLabel.getText() + " " + profile.getAge());
+        statusDescription.setText("here go status");
+
+        //load all posts
+        postArray = profile.getPosts();
+        //for each post make a new vbox and insert all info into it
+        for (Post p: postArray) {
+            VBox vBox = new VBox();
+            vBox.setAlignment(Pos.CENTER_LEFT);
+            vBox.setPadding(new Insets(10));
+            vBox.setSpacing(5);
+
+            Text message = new Text(p.getMessage());
+            message.setFont(new Font("Serif", 16));
+            Text time = new Text(new SimpleDateFormat("MMM dd, yyyy 'at' hh:mma").format(p.getTimestamp()));
+
+            vBox.getChildren().add(message);
+            vBox.getChildren().add(time);
+
+            //if the post belong to the user, give option to delete
+            if(id == p.getCreatorId()) {
+                Button delete = new Button("Delete");
+                delete.setOnAction(e -> deletePost(p.getPostId(), vBox));
+                /*deleteButtons.add(delete);
+                deleteButtonsId.add(new Integer(p.getPostId()));*/
+
+                vBox.getChildren().add(delete);
+            }
+            topMiddleVB.getChildren().add(vBox);
+        }
+
+
+    }
+    private void deletePost(int postID, VBox vBoxToDelete)
+    {
+        //when a post is deleted it needs to be removed from the detabase and then need to removed from topMiddleVB
+
+        System.out.println("Deleting post...");
+        try {
+            Connection connect = getConnection();
+            connect.prepareStatement("DELETE FROM posts WHERE id = '" + postID + "';").executeUpdate();
+            topMiddleVB.getChildren().remove(vBoxToDelete);
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+    }
+
+    public Connection getConnection() throws Exception{
+        try{
+            String driver = "com.mysql.cj.jdbc.Driver";
+            String url = "jdbc:mysql://localhost:3306/facebooklite";
+            String username = "root";
+            String password = "";
+            Class.forName(driver);
+            Connection connect = DriverManager.getConnection(url,username,password);
+            System.out.println("Connection Established");
+            return connect;
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return null;
+    }
 }

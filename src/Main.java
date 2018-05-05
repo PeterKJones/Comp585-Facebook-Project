@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import javafx.application.Application;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -185,8 +186,7 @@ public class Main extends Application
 		System.out.println("Name: " + result.getString("first_name"));
 		System.out.println("Username: " + result.getString("username"));
         account = new Account(Integer.parseInt(result.getString("id")));
-		System.out.println("Password: " + result.getString("password"));;
-
+		System.out.println("Password: " + result.getString("password"));
 		//Should return id or something to save who the current user is
 
         profile = new Profile(
@@ -211,6 +211,8 @@ public class Main extends Application
                 profile, Integer.parseInt(result.getString("id"))
         );
 
+        profileScene.loadProfileToScene(id, profile);
+
 		s.setScene(profileScene.getScene());
 
 	}
@@ -218,15 +220,29 @@ public class Main extends Application
 	public ArrayList<Post> getAllPosts() throws Exception{
 	    System.out.println("Getting Posts...");
         Connection connect = getConnection();
-        PreparedStatement statement = connect.prepareStatement("SELECT * FROM posts");
+
+        //get all friends of the user
+		PreparedStatement statementGetFriends = connect.prepareStatement("SELECT friend_id FROM friends WHERE user_id='" + account.getId() + "';");
+		ResultSet friendsList = statementGetFriends.executeQuery();
+
+		//with all the id's of friends, prepare a statement that will be used to get all posts where the user is of the user, and of friends of the user
+		String statementString = "SELECT * FROM posts WHERE user_id='" + account.getId() + "' ";
+		while (friendsList.next()){
+			statementString = statementString + "OR user_id='" + Integer.parseInt(friendsList.getString("friend_id")) + "' ";
+		}
+		statementString = statementString + "ORDER BY timestamp DESC;";
+
+		//now have statement ready to fire
+        PreparedStatement statement = connect.prepareStatement(statementString);
         ResultSet result = statement.executeQuery();
         ArrayList<Post> posts = new ArrayList<>();
 
         while(result.next()){
-
             Post currentPost = new Post(
                     result.getString("message"),
-                    Integer.parseInt(result.getString("user_id"))
+                    Integer.parseInt(result.getString("user_id")),
+					result.getTimestamp("timestamp"),
+					Integer.parseInt(result.getString("id"))
             );
             posts.add(currentPost);
         }

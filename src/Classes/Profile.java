@@ -44,4 +44,56 @@ public class Profile
 		this.lastName = lastName;
 		this.age = age;
 	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public String getEducation() {
+		return education;
+	}
+
+	public String getAboutMe() {
+		return aboutMe;
+	}
+
+	public String getProfileImage() {
+		return profileImage;
+	}
+
+	public ArrayList<Profile> getFriends() {
+		return friends;
+	}
+
+	public ArrayList<Post> getPosts() {
+		return posts;
+	}
+
+	public int getAgeVis() {
+		return ageVis;
+	}
+
+	public int getFriendVis() {
+		return friendVis;
+	}
+
+	public int getPostVis() {
+		return postVis;
+	}
 }
