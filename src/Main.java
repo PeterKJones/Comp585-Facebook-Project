@@ -211,7 +211,7 @@ public class Main extends Application
                 profile, Integer.parseInt(result.getString("id"))
         );
 
-        profileScene.loadPostsToScene(id, profile);
+        profileScene.loadToScene(id, profile);
 
 		s.setScene(profileScene.getScene());
 

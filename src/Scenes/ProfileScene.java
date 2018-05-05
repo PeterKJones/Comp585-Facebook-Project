@@ -186,14 +186,9 @@ public class ProfileScene
         bottomMiddleHB.setManaged(false);
     }
 
-    public void loadPostsToScene(int id, Profile profile)
+    //loads posts and friends
+    public void loadToScene(int id, Profile profile)
     {
-        /*
-        avatarImage;
-    private Text ageLabel, statusLabel, statusDescription, friendsListLabel, myPostsLabel;
-    public TextArea postDescription;
-    private ArrayList<Post> postArray;
-         */
         //load profile stuff for a single person
         avatarImage = new Image(profile.getProfileImage(),AVATAR_DIMENSIONS,AVATAR_DIMENSIONS,false,true);
         ageLabel.setText(ageLabel.getText() + " " + profile.getAge());
