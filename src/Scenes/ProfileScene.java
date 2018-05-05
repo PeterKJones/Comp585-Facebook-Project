@@ -19,6 +19,7 @@ import javafx.scene.text.TextAlignment;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -185,7 +186,7 @@ public class ProfileScene
         bottomMiddleHB.setManaged(false);
     }
 
-    public void loadProfileToScene(int id, Profile profile)
+    public void loadPostsToScene(int id, Profile profile)
     {
         /*
         avatarImage;
@@ -207,7 +208,12 @@ public class ProfileScene
             vBox.setPadding(new Insets(10));
             vBox.setSpacing(5);
 
-            Text message = new Text(p.getMessage());
+            HBox friendsHBox = new HBox();
+            friendsHBox.setAlignment(Pos.CENTER_LEFT);
+            friendsHBox.setPadding(new Insets(10));
+            friendsHBox.setSpacing(5);
+
+            Text message = new Text(p.getMessage() + " - From " + getPoster(p.getCreatorId()));
             message.setFont(new Font("Serif", 16));
             Text time = new Text(new SimpleDateFormat("MMM dd, yyyy 'at' hh:mma").format(p.getTimestamp()));
 
@@ -223,7 +229,16 @@ public class ProfileScene
 
                 vBox.getChildren().add(delete);
             }
+
+            //Now time to load friends of the user
+            Text friendName = new Text("Shaq Eel Oneel");
+            Button friendButton = new Button("View");
+
+            friendsHBox.getChildren().add(friendName);
+            friendsHBox.getChildren().add(friendButton);
+
             topMiddleVB.getChildren().add(vBox);
+            rightVB.getChildren().add(friendsHBox);
         }
 
 
@@ -241,6 +256,20 @@ public class ProfileScene
         catch(Exception e){
             System.out.println(e);
         }
+    }
+
+    private String getPoster(int id){
+        try {
+            Connection connect = getConnection();
+            ResultSet result = connect.prepareStatement("SELECT * FROM users WHERE id = '" + id + "';").executeQuery();
+            if(result.next()) {
+                return result.getString("first_name") + " " + result.getString("last_name");
+            }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return null;
     }
 
     public Connection getConnection() throws Exception{
