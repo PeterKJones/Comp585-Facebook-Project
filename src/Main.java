@@ -29,6 +29,7 @@ public class Main extends Application
 	ProfileCreation settingsCreation;
 	ProfileScene settingsScene;
 	//SettingsScene settingsScene;
+	String css = this.getClass().getResource("/Scenes/fblStyles.css").toExternalForm();
 	
 	public static void main(String[] args)  throws Exception
 	{
@@ -47,6 +48,7 @@ public class Main extends Application
 		initializeEvents(mainWindow);
 		
 		mainWindow.setScene(loginPage.getScene()); //Should initialize to the login page every time. May be set otherwise for testing purposes.
+		mainWindow.getScene().getStylesheets().add(css);
 		mainWindow.setResizable(false);
 		mainWindow.show();
 	}
@@ -103,10 +105,16 @@ public class Main extends Application
 					e1.printStackTrace();
 				}
 			});
-			profileScene.settingsButton.setOnAction(e -> mainWindow.setScene(settingsScene.getScene()));
+			profileScene.settingsButton.setOnAction(e -> {
+				mainWindow.setScene(settingsCreation.getScene());
+				mainWindow.getScene().getStylesheets().add(css);
+			});
 			profileScene.logoutButton.setOnAction(e -> mainWindow.setScene(loginPage.getScene()));
 			profileScene.postButton.setOnAction(e -> postStatus());
-			loginPage.newUserButton.setOnAction(e -> mainWindow.setScene(profileCreation.getScene()));
+			loginPage.newUserButton.setOnAction(e -> {
+				mainWindow.setScene(profileCreation.getScene());
+				mainWindow.getScene().getStylesheets().add(css);
+			});
 
 	}
 
@@ -214,6 +222,7 @@ public class Main extends Application
         profileScene.loadToScene(id, profile);
 
 		s.setScene(profileScene.getScene());
+		s.getScene().getStylesheets().add(css);
 
 	}
 
@@ -286,7 +295,7 @@ public class Main extends Application
 			String driver = "com.mysql.cj.jdbc.Driver";
 			String url = "jdbc:mysql://localhost:3306/facebooklite";
 			String username = "root";
-			String password = "";
+			String password = "root";
 			Class.forName(driver);
 			Connection connect = DriverManager.getConnection(url,username,password);
 			System.out.println("Connection Established");

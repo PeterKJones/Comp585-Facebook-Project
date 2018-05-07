@@ -1,9 +1,12 @@
 package Scenes;
 
 import java.awt.Desktop;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -13,8 +16,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import javax.imageio.ImageIO;
 
 public class ProfileCreation
 {
@@ -67,7 +74,7 @@ public class ProfileCreation
 
 		layout.getChildren().add(gridPane);
 
-		scene = new Scene(layout, 400, 400);
+		scene = new Scene(layout, 400, 500);
 	}
 
 	public void updateGridPane(Stage mainWindow){
@@ -110,9 +117,32 @@ public class ProfileCreation
 				new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(final ActionEvent e) {
-						File file = fileChooser.showOpenDialog(mainWindow);
+						FileChooser.ExtensionFilter imageFilter
+								= new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
+						FileChooser fc = new FileChooser();
+
+						fc.getExtensionFilters().add(imageFilter);
+						File file = fc.showOpenDialog(mainWindow);
+
 						if (file != null) {
-							openFile(file);
+							try {
+								ImageView imageView = new ImageView();
+								BufferedImage bufferedImage = ImageIO.read(file);
+								Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+								imageView.setImage(image);
+								imageView.setFitHeight(80);
+								imageView.setFitWidth(80);
+								//I was able to get image here but I don't know how to save to the database but the alert shows that we can save the image
+								Alert alert = new Alert(Alert.AlertType.INFORMATION);
+								alert.setContentText(file.getAbsoluteFile().getAbsolutePath());
+								alert.setGraphic(imageView);
+								alert.setHeaderText("Avatar!");
+								alert.setTitle("Avatar");
+								alert.showAndWait();
+
+							} catch (IOException ex) {
+								Logger.getLogger("Image Error");
+							}
 						}
 					}
 				});
@@ -133,8 +163,8 @@ public class ProfileCreation
 		gridPane.add(education, 0, 6 + rwSettings);
 		gridPane.add(aboutMe, 0, 7 + rwSettings);
 		gridPane.add(profileImage, 0, 8 + rwSettings);
-		gridPane.add(username, 0 , 9);
-		gridPane.add(password, 0 , 10);
+		gridPane.add(username, 0 , 9 + rwSettings);
+		gridPane.add(password, 0 , 10 + rwSettings);
 
 
 		gridPane.add(fNameField, 1, 0 + rwSettings);
