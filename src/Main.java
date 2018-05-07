@@ -101,6 +101,8 @@ public class Main extends Application
 							Integer.parseInt(profileCreation.ageBox.getValue()),
 							profileCreation.levOfEduBox.getValue()
 					);
+					//created user, now log into automatically
+					login(profileCreation.usernameField.getText(), profileCreation.passwordField.getText(), mainWindow);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -124,6 +126,17 @@ public class Main extends Application
 		//=========If all fields are filled (not null), account creation goes here (could be where this method is called too. up to you.==========
 		//generate the profile object here with the fully filled form
 		//Profile profile = new Profile(firstname, lastname, blah blah blah)
+
+		//first check if the username is unique
+		System.out.println("Checking if name is unique...");
+		//Query for all friends of current user
+		PreparedStatement statement = connect.prepareStatement("SELECT * FROM users WHERE username='" + username + "';");
+		ResultSet result = statement.executeQuery();
+		//if it finds anything, that means that username exists, throw an error
+		while(result.next()){
+			throw new Exception("That user already exists!");
+		}
+
 		    profile = new Profile(
 		        firstName,
                 lastName,
@@ -153,7 +166,7 @@ public class Main extends Application
 		String status = "Just joined Facebook Lite!";
 		String image = "Images/fbl_default.png";
 
-		PreparedStatement statement = connect.prepareStatement(
+		statement = connect.prepareStatement(
 				"INSERT INTO users (" +
 						"id, " +
 						"first_name," +
