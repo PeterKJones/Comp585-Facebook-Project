@@ -107,8 +107,47 @@ public class Main extends Application
 					e1.printStackTrace();
 				}
 			});
-			profileScene.settingsButton.setOnAction(e -> {
+			profileScene.settingsButton.setOnAction(e ->
+			{
 				mainWindow.setScene(settingsCreation.getScene());
+				settingsCreation.loadContent(account.getId(), profile);
+				//when confirm button is pressed, get all values and update the db with them
+				settingsCreation.confirmButton.setOnAction(e1 ->
+				{
+					String genderSelected;
+					if(settingsCreation.genderMale.isSelected())
+						genderSelected = "Male";
+					else
+						genderSelected="Female";
+
+					try
+					{
+						PreparedStatement statement = getConnection().prepareStatement(
+								"UPDATE users SET " +
+										"first_name = '" + settingsCreation.fNameField.getText() +
+										"', password = '" + settingsCreation.passwordField.getText() +
+										"', username = '" + settingsCreation.usernameField.getText() +
+										"', age = '" + settingsCreation.ageBox.getValue() +
+										"', gender = '" + genderSelected +
+										"', bio = '" + settingsCreation.aboutMeField.getText() +
+										"', image = '" + settingsCreation.image +
+										"', age_visibility = " + (settingsCreation.ageVisField.isSelected()?1:0) +
+										", friend_visibility = " + (settingsCreation.friendVisField.isSelected()?1:0) +
+										", post_visibility = " + (settingsCreation.postVisField.isSelected()?1:0) +
+										", status = '" + settingsCreation.status +
+										"', last_name = '" + settingsCreation.lNameField.getText() +
+										"', education = '" + settingsCreation.levOfEduBox.getValue() +
+										"', location = '" + settingsCreation.locationField.getText() +
+										"' WHERE id = '" + account.getId() + "';");
+						statement.executeUpdate();
+						//clear profile old info, then reload it
+						login(settingsCreation.usernameField.getText(), settingsCreation.passwordField.getText(), mainWindow);
+					}
+					catch (Exception e2)
+					{
+						e2.printStackTrace();
+					}
+				});
 				mainWindow.getScene().getStylesheets().add(css);
 			});
 			profileScene.logoutButton.setOnAction(e -> mainWindow.setScene(loginPage.getScene()));
@@ -120,7 +159,7 @@ public class Main extends Application
 
 	}
 
-	public void createUser (String username, String password, String firstName, String lastName, String about, String location, String gender, int age, String education) throws Exception{
+	public void createUser(String username, String password, String firstName, String lastName, String about, String location, String gender, int age, String education) throws Exception{
 		Connection connect = getConnection();
 
 		//=========If all fields are filled (not null), account creation goes here (could be where this method is called too. up to you.==========
@@ -130,8 +169,8 @@ public class Main extends Application
 		//first check if the username is unique
 		System.out.println("Checking if name is unique...");
 		//Query for all friends of current user
-		PreparedStatement statement = connect.prepareStatement("SELECT * FROM users WHERE username='" + username + "';");
-		ResultSet result = statement.executeQuery();
+		PreparedStatement usersStatement = connect.prepareStatement("SELECT * FROM users WHERE username='" + username + "';");
+		ResultSet result = usersStatement.executeQuery();
 		//if it finds anything, that means that username exists, throw an error
 		while(result.next()){
 			throw new Exception("That user already exists!");
@@ -166,7 +205,7 @@ public class Main extends Application
 		String status = "Just joined Facebook Lite!";
 		String image = "Images/fbl_default.png";
 
-		statement = connect.prepareStatement(
+		PreparedStatement statement = connect.prepareStatement(
 				"INSERT INTO users (" +
 						"id, " +
 						"first_name," +
@@ -186,9 +225,6 @@ public class Main extends Application
 						")" +
 				" VALUES (NULL, '"+firstName+"', '"+password+"', '"+username+"', '"+age+"', '"+gender+"', '"+about+"', '"+image+"', 1, 1, 1, '"+status+"', '"+lastName+"', '"+education+"', '"+location+"' )");
 		statement.executeUpdate();
-
-
-		
 	}
 
 	public void login(String user, String pass, Stage s) throws Exception{

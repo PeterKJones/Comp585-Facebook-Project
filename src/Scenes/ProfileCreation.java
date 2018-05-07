@@ -4,8 +4,13 @@ import java.awt.Desktop;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.util.logging.Logger;
 
+import Classes.Account;
+import Classes.Profile;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -42,6 +47,13 @@ public class ProfileCreation
 	public TextField locationField;
 	public ComboBox<String> levOfEduBox;
 	public TextField aboutMeField;
+	public CheckBox ageVisField;
+	public CheckBox friendVisField;
+	public CheckBox postVisField;
+	public String image;
+	public  String status;
+	public RadioButton genderMale;
+	public RadioButton genderFemale;
 	public Label errorNotif;
 
 	public ProfileCreation(Stage mainWindow)
@@ -103,9 +115,9 @@ public class ProfileCreation
 			ageBox.getItems().add(String.valueOf(i));
 		}
 		genderGroup = new ToggleGroup();
-		RadioButton genderMale = new RadioButton("Male");
+		genderMale = new RadioButton("Male");
 		genderMale.setToggleGroup(genderGroup);
-		RadioButton genderFemale = new RadioButton("Female");
+		genderFemale = new RadioButton("Female");
 		genderFemale.setToggleGroup(genderGroup);
 		locationField = new TextField();
 		levOfEduBox = new ComboBox<String>();
@@ -178,17 +190,15 @@ public class ProfileCreation
 		gridPane.add(browseButton, 1, 8 + rwSettings);
 		gridPane.add(usernameField, 1, 9 + rwSettings);
 		gridPane.add(passwordField, 1 , 10 + rwSettings);
-
-
 	}
 
 	private void addSettingControls(){
 		Text ageVis = new Text("Age Visability: ");
 		Text friendVis = new Text("Friend Visability: ");
 		Text postVis = new Text("Post Visability: ");
-		CheckBox ageVisField = new CheckBox();
-		CheckBox friendVisField = new CheckBox();
-		CheckBox postVisField = new CheckBox();
+		ageVisField = new CheckBox();
+		friendVisField = new CheckBox();
+		postVisField = new CheckBox();
 
 		gridPane.add(ageVis, 0, 0);
 		gridPane.add(ageVisField, 1, 0);
@@ -213,4 +223,64 @@ public class ProfileCreation
             desktop.open(file);
         } catch (IOException ex) { System.out.println("Could not open file."); }
     }
+
+    public void loadContent(int accountID, Profile profile)
+	{
+		try {
+			Connection connect = getConnection();
+			ResultSet result = connect.prepareStatement("SELECT * FROM users WHERE id = '" + accountID + "';").executeQuery();
+			if(result.next()) {
+				if(result.getBoolean("age_visibility"))
+					ageVisField.setSelected(true);
+				else
+					ageVisField.setSelected(false);
+
+				if(result.getBoolean("friend_visibility"))
+					friendVisField.setSelected(true);
+				else
+					friendVisField.setSelected(false);
+
+				if(result.getBoolean("post_visibility"))
+					postVisField.setSelected(true);
+				else
+					postVisField.setSelected(false);
+
+				fNameField.setText(result.getString("first_name"));
+				lNameField.setText(result.getString("last_name"));
+				ageBox.setValue(result.getString("age"));
+				if(result.getString("gender").toLowerCase().equals("m") ||
+						result.getString("gender").toLowerCase().equals("male"))
+					genderMale.setSelected(true);
+				else
+					genderFemale.setSelected(true);
+				aboutMeField.setText(result.getString("bio"));
+				levOfEduBox.setValue(result.getString("education"));
+				image = result.getString("image");
+				status = result.getString("status");
+				locationField.setText(result.getString("location"));
+				usernameField.setText(result.getString("username"));
+				passwordField.setText(result.getString("password"));
+			}
+		}
+		catch(Exception e){
+			System.out.println(e);
+		}
+	}
+
+	public Connection getConnection() throws Exception{
+		try{
+			String driver = "com.mysql.cj.jdbc.Driver";
+			String url = "jdbc:mysql://localhost:3306/facebooklite";
+			String username = "root";
+			String password = "";
+			Class.forName(driver);
+			Connection connect = DriverManager.getConnection(url,username,password);
+			System.out.println("Connection Established");
+			return connect;
+		}
+		catch(Exception e){
+			System.out.println(e);
+		}
+		return null;
+	}
 }

@@ -1,5 +1,7 @@
 package Scenes;
 
+import Classes.Account;
+import Classes.Profile;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
