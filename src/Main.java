@@ -133,8 +133,10 @@ public class Main extends Application
                 education,
                 "Im new to Facebook Lite",
                 "Images/fbl_default.png",
-                getCurrentUserFriends(),
-                getAllPosts(),
+                //getCurrentUserFriends(),
+				new ArrayList<Profile>(),
+                //getAllPosts(),
+				new ArrayList<Post>(),
                 1,
                 1,
                 1
@@ -171,6 +173,9 @@ public class Main extends Application
 						")" +
 				" VALUES (NULL, '"+firstName+"', '"+password+"', '"+username+"', '"+age+"', '"+gender+"', '"+about+"', '"+image+"', 1, 1, 1, '"+status+"', '"+lastName+"', '"+education+"', '"+location+"' )");
 		statement.executeUpdate();
+
+
+		
 	}
 
 	public void login(String user, String pass, Stage s) throws Exception{
@@ -280,8 +285,8 @@ public class Main extends Application
 				profiles.add(currentProfile);
 			}
         }
-        //return profiles;
-		return new ArrayList<Profile>();
+        return profiles;
+		//return new ArrayList<Profile>();
     }
 
     public void addFriend(int friend_id) throws Exception{
@@ -295,7 +300,7 @@ public class Main extends Application
 			String driver = "com.mysql.cj.jdbc.Driver";
 			String url = "jdbc:mysql://localhost:3306/facebooklite";
 			String username = "root";
-			String password = "root";
+			String password = "";
 			Class.forName(driver);
 			Connection connect = DriverManager.getConnection(url,username,password);
 			System.out.println("Connection Established");
