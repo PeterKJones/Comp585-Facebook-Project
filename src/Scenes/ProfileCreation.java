@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.util.Random;
 import java.util.logging.Logger;
 
 import Classes.Account;
@@ -50,8 +51,8 @@ public class ProfileCreation
 	public CheckBox ageVisField;
 	public CheckBox friendVisField;
 	public CheckBox postVisField;
-	public String image;
-	public  String status;
+	public String imageString;
+	public String status;
 	public RadioButton genderMale;
 	public RadioButton genderFemale;
 	public Label errorNotif;
@@ -148,14 +149,28 @@ public class ProfileCreation
 								imageView.setImage(image);
 								imageView.setFitHeight(80);
 								imageView.setFitWidth(80);
-								//I was able to get image here but I don't know how to save to the database but the alert shows that we can save the image
+
 								Alert alert = new Alert(Alert.AlertType.INFORMATION);
 								alert.setContentText(file.getAbsoluteFile().getAbsolutePath());
 								alert.setGraphic(imageView);
-								alert.setHeaderText("Avatar!");
+								alert.setHeaderText("Your avatar has been updated.");
 								alert.setTitle("Avatar");
 								alert.showAndWait();
 
+
+								//generate random name for file and saved
+								String number = "";
+								Random rnd = new Random();
+								for (int i = 0; i<24; i++)
+									number = number + rnd.nextInt(10);
+								File directoryinfo = new File("");
+								String formatName = file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf(".") + 1);
+								String fileName = "UserImages/" + number + "." + formatName;
+								File outputfile = new File(directoryinfo.getAbsolutePath() + "/src/" +fileName);
+								ImageIO.write(bufferedImage, formatName, outputfile);
+
+								// save a reference to the file to the db
+								imageString = fileName;
 							} catch (IOException ex) {
 								Logger.getLogger("Image Error");
 							}
@@ -262,7 +277,7 @@ public class ProfileCreation
 					genderFemale.setSelected(true);
 				aboutMeField.setText(result.getString("bio"));
 				levOfEduBox.setValue(result.getString("education"));
-				image = result.getString("image");
+				imageString = result.getString("image");
 				status = result.getString("status");
 				locationField.setText(result.getString("location"));
 				usernameField.setText(result.getString("username"));

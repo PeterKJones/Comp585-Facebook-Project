@@ -134,7 +134,7 @@ public class Main extends Application
 										"', age = '" + settingsCreation.ageBox.getValue() +
 										"', gender = '" + genderSelected +
 										"', bio = '" + settingsCreation.aboutMeField.getText() +
-										"', image = '" + settingsCreation.image +
+										"', image = '" + settingsCreation.imageString +
 										"', age_visibility = " + (settingsCreation.ageVisField.isSelected()?1:0) +
 										", friend_visibility = " + (settingsCreation.friendVisField.isSelected()?1:0) +
 										", post_visibility = " + (settingsCreation.postVisField.isSelected()?1:0) +

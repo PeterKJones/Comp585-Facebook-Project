@@ -12,3 +12,7 @@
 .root {
     -fx-background: gray;
 }
+.statusDesc{
+    -fx-indent: 20px;
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+}

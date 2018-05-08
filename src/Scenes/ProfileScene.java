@@ -19,6 +19,7 @@ import javafx.scene.text.TextAlignment;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -193,7 +194,9 @@ public class ProfileScene
     public void loadToScene(int id, Profile profile, Boolean isSettings)
     {
         //load profile stuff for a single person
+        System.out.println(profile.getProfileImage());
         avatarImage = new Image(profile.getProfileImage(),AVATAR_DIMENSIONS,AVATAR_DIMENSIONS,false,true);
+        avatarImageV.setImage(avatarImage);
         ageLabel.setText( "Age:  " + profile.getAge());
         statusDescription.setText("    " + profile.getStatus());
 
@@ -228,19 +231,33 @@ public class ProfileScene
 
                         vBox.getChildren().add(delete);
                     }
-
                     //Now time to load friends of the user
-            //first get list of friends
+                    //first get list of friends
+                    try {
+                        Connection connection = getConnection();
+                        PreparedStatement friendsStatement = connection.prepareStatement("SELECT friend_id FROM friends WHERE user_id='" + id + "';");
+                        ResultSet result = friendsStatement.executeQuery();
+                        //now has a list of friends for the user. Get the names of each friends, make a "view" button, clicking on the button loads friend's profile by sending their id
+                        while (result.next())
+                        {
+                            PreparedStatement nameStatement = connection.prepareStatement("SELECT * FROM users WHERE id='" + result.getString("friend_id") + "';");
+                            ResultSet namesResult = nameStatement.executeQuery();
+                            while (namesResult.next())
+                            {
+                                Text friendName = new Text(namesResult.getString("first_name") + " " + namesResult.getString("last_name"));
+                                Button friendButton = new Button("View");
 
+                                friendsHBox.getChildren().add(friendName);
+                                friendsHBox.getChildren().add(friendButton);
 
-                    Text friendName = new Text("Shaq Eel Oneel");
-                    Button friendButton = new Button("View");
+                                topMiddleVB.getChildren().add(vBox);
+                                rightVB.getChildren().add(friendsHBox);
+                            }
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
 
-                    friendsHBox.getChildren().add(friendName);
-                    friendsHBox.getChildren().add(friendButton);
-
-                    topMiddleVB.getChildren().add(vBox);
-                    rightVB.getChildren().add(friendsHBox);
                 }
         }
 
