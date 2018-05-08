@@ -192,7 +192,7 @@ public class ProfileScene
         //load profile stuff for a single person
         avatarImage = new Image(profile.getProfileImage(),AVATAR_DIMENSIONS,AVATAR_DIMENSIONS,false,true);
         ageLabel.setText(ageLabel.getText() + " " + profile.getAge());
-        statusDescription.setText("here go status");
+        statusDescription.setText(profile.getStatus());
 
         //load all posts
         postArray = profile.getPosts();

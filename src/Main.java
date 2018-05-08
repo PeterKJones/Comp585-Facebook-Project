@@ -15,6 +15,7 @@ import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
@@ -28,6 +29,7 @@ public class Main extends Application
 	ProfileScene profileScene;
 	ProfileCreation settingsCreation;
 	ProfileScene settingsScene;
+
 	//SettingsScene settingsScene;
 	String css = this.getClass().getResource("/Scenes/fblStyles.css").toExternalForm();
 	
@@ -59,6 +61,8 @@ public class Main extends Application
 		profileCreation = new ProfileCreation(mainWindow);
 		profileScene = new ProfileScene();
 		settingsCreation = new ProfileCreation(mainWindow,true);
+		settingsScene = new ProfileScene();
+
 		
 	}
 
@@ -191,7 +195,8 @@ public class Main extends Application
 				new ArrayList<Post>(),
                 1,
                 1,
-                1
+                1,
+				"default status"
             );
 
 		    //CANNOT MAKE ACCOUNT HERE, WOULD REQUIRE ANOTHER QUERY AFTER INSERT. JUST REDIRECT NEW USER TO LOGIN.
@@ -264,7 +269,8 @@ public class Main extends Application
                 getAllPosts(),
                 Integer.parseInt(result.getString("age_visibility")),
                 Integer.parseInt(result.getString("friend_visibility")),
-                Integer.parseInt(result.getString("post_visibility"))
+                Integer.parseInt(result.getString("post_visibility")),
+				result.getString("status")
         );
 
         account = new Account(
@@ -274,8 +280,7 @@ public class Main extends Application
         );
 
         profileScene.loadToScene(id, profile);
-
-		s.setScene(profileScene.getScene());
+        s.setScene(profileScene.getScene());
 		s.getScene().getStylesheets().add(css);
 
 	}
