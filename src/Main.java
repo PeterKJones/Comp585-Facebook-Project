@@ -142,6 +142,7 @@ public class Main extends Application
 										"', last_name = '" + settingsCreation.lNameField.getText() +
 										"', education = '" + settingsCreation.levOfEduBox.getValue() +
 										"', location = '" + settingsCreation.locationField.getText() +
+										"', status = '" + settingsCreation.statusField.getText() +
 										"' WHERE id = '" + account.getId() + "';");
 						statement.executeUpdate();
 						//clear profile old info, then reload it
