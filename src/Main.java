@@ -344,7 +344,7 @@ public class Main extends Application
 		statement.executeUpdate();
 	}
 
-	public Connection getConnection() throws Exception{
+	public static Connection getConnection() throws Exception{
 		try{
 			String driver = "com.mysql.cj.jdbc.Driver";
 			String url = "jdbc:mysql://localhost:3306/facebooklite";

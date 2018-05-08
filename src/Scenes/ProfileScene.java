@@ -226,6 +226,9 @@ public class ProfileScene
             }
 
             //Now time to load friends of the user
+            //first get list of friends
+
+
             Text friendName = new Text("Shaq Eel Oneel");
             Button friendButton = new Button("View");
 
