@@ -55,6 +55,7 @@ public class ProfileCreation
 	public RadioButton genderMale;
 	public RadioButton genderFemale;
 	public Label errorNotif;
+    public TextField statusField;
 
 	public ProfileCreation(Stage mainWindow)
 	{
@@ -101,6 +102,7 @@ public class ProfileCreation
 		Text education = new Text("Level of Education: ");
 		Text aboutMe = new Text("About Me: ");
 		Text profileImage = new Text("Profile Picture: ");
+		Text statusTxt = new Text("Status: ");
 		Label errorNotif = new Label();
 
 		//right column
@@ -108,6 +110,8 @@ public class ProfileCreation
 		passwordField = new PasswordField();
 		 fNameField = new TextField();
 		 lNameField = new TextField();
+		 statusField =  new TextField();
+
 
 		 ageBox = new ComboBox<String>();
 		for (int i = 1; i <= 100; i++) //populates the age box for ages 1 to 100
@@ -130,7 +134,7 @@ public class ProfileCreation
 					@Override
 					public void handle(final ActionEvent e) {
 						FileChooser.ExtensionFilter imageFilter
-								= new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
+								= new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.gif", "*.jpeg", "*.png");
 						FileChooser fc = new FileChooser();
 
 						fc.getExtensionFilters().add(imageFilter);
@@ -160,6 +164,7 @@ public class ProfileCreation
 				});
 
 
+
 		//setting location
 
 		gridPane.setMinSize(400, 200);
@@ -177,6 +182,7 @@ public class ProfileCreation
 		gridPane.add(profileImage, 0, 8 + rwSettings);
 		gridPane.add(username, 0 , 9 + rwSettings);
 		gridPane.add(password, 0 , 10 + rwSettings);
+		gridPane.add(statusTxt, 0, 11 + rwSettings);
 
 
 		gridPane.add(fNameField, 1, 0 + rwSettings);
@@ -190,6 +196,7 @@ public class ProfileCreation
 		gridPane.add(browseButton, 1, 8 + rwSettings);
 		gridPane.add(usernameField, 1, 9 + rwSettings);
 		gridPane.add(passwordField, 1 , 10 + rwSettings);
+        gridPane.add(statusField, 1 , 11 + rwSettings);
 	}
 
 	private void addSettingControls(){
@@ -210,7 +217,7 @@ public class ProfileCreation
 
 	private void addConfirmButton(){
 		confirmButton = new Button("Confirm");
-		gridPane.add(confirmButton, 1, 11 + rwSettings);
+		gridPane.add(confirmButton, 1, 12 + rwSettings);
 	}
 	public Scene getScene()
 	{

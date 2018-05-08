@@ -56,6 +56,9 @@ public class ProfileScene
         ageLabel = new Text("Age: ");
         statusLabel = new Text("Status: ");
         statusDescription = new Text("");
+
+
+
         settingsButton = new Button("Settings");
         settingsButton.setText("Settings");
         logoutButton = new Button("Logout");
@@ -187,56 +190,58 @@ public class ProfileScene
     }
 
     //loads posts and friends
-    public void loadToScene(int id, Profile profile)
+    public void loadToScene(int id, Profile profile, Boolean isSettings)
     {
         //load profile stuff for a single person
         avatarImage = new Image(profile.getProfileImage(),AVATAR_DIMENSIONS,AVATAR_DIMENSIONS,false,true);
-        ageLabel.setText(ageLabel.getText() + " " + profile.getAge());
-        statusDescription.setText("here go status");
+        ageLabel.setText( "Age:  " + profile.getAge());
+        statusDescription.setText("    " + profile.getStatus());
 
         //load all posts
-        postArray = profile.getPosts();
-        //for each post make a new vbox and insert all info into it
-        for (Post p: postArray) {
-            VBox vBox = new VBox();
-            vBox.setAlignment(Pos.CENTER_LEFT);
-            vBox.setPadding(new Insets(10));
-            vBox.setSpacing(5);
+        if(!isSettings) {
+                postArray = profile.getPosts();
+                //for each post make a new vbox and insert all info into it
+                for (Post p : postArray) {
+                    VBox vBox = new VBox();
+                    vBox.setAlignment(Pos.CENTER_LEFT);
+                    vBox.setPadding(new Insets(10));
+                    vBox.setSpacing(5);
 
-            HBox friendsHBox = new HBox();
-            friendsHBox.setAlignment(Pos.CENTER_LEFT);
-            friendsHBox.setPadding(new Insets(10));
-            friendsHBox.setSpacing(5);
+                    HBox friendsHBox = new HBox();
+                    friendsHBox.setAlignment(Pos.CENTER_LEFT);
+                    friendsHBox.setPadding(new Insets(10));
+                    friendsHBox.setSpacing(5);
 
-            Text message = new Text(p.getMessage() + " - From " + getPoster(p.getCreatorId()));
-            message.setFont(new Font("Serif", 16));
-            Text time = new Text(new SimpleDateFormat("MMM dd, yyyy 'at' hh:mma").format(p.getTimestamp()));
+                    Text message = new Text(p.getMessage() + " - From " + getPoster(p.getCreatorId()));
+                    message.setFont(new Font("Serif", 16));
+                    Text time = new Text(new SimpleDateFormat("MMM dd, yyyy 'at' hh:mma").format(p.getTimestamp()));
 
-            vBox.getChildren().add(message);
-            vBox.getChildren().add(time);
+                    vBox.getChildren().add(message);
+                    vBox.getChildren().add(time);
 
-            //if the post belong to the user, give option to delete
-            if(id == p.getCreatorId()) {
-                Button delete = new Button("Delete");
-                delete.setOnAction(e -> deletePost(p.getPostId(), vBox));
-                /*deleteButtons.add(delete);
-                deleteButtonsId.add(new Integer(p.getPostId()));*/
+                    //if the post belong to the user, give option to delete
+                    if (id == p.getCreatorId()) {
+                        Button delete = new Button("Delete");
+                        delete.setOnAction(e -> deletePost(p.getPostId(), vBox));
+                    /*deleteButtons.add(delete);
+                    deleteButtonsId.add(new Integer(p.getPostId()));*/
 
-                vBox.getChildren().add(delete);
-            }
+                        vBox.getChildren().add(delete);
+                    }
 
-            //Now time to load friends of the user
+                    //Now time to load friends of the user
             //first get list of friends
 
 
-            Text friendName = new Text("Shaq Eel Oneel");
-            Button friendButton = new Button("View");
+                    Text friendName = new Text("Shaq Eel Oneel");
+                    Button friendButton = new Button("View");
 
-            friendsHBox.getChildren().add(friendName);
-            friendsHBox.getChildren().add(friendButton);
+                    friendsHBox.getChildren().add(friendName);
+                    friendsHBox.getChildren().add(friendButton);
 
-            topMiddleVB.getChildren().add(vBox);
-            rightVB.getChildren().add(friendsHBox);
+                    topMiddleVB.getChildren().add(vBox);
+                    rightVB.getChildren().add(friendsHBox);
+                }
         }
 
 

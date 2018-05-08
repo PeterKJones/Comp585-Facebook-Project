@@ -15,6 +15,7 @@ import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
@@ -28,6 +29,7 @@ public class Main extends Application
 	ProfileScene profileScene;
 	ProfileCreation settingsCreation;
 	ProfileScene settingsScene;
+
 	//SettingsScene settingsScene;
 	String css = this.getClass().getResource("/Scenes/fblStyles.css").toExternalForm();
 	
@@ -59,6 +61,8 @@ public class Main extends Application
 		profileCreation = new ProfileCreation(mainWindow);
 		profileScene = new ProfileScene();
 		settingsCreation = new ProfileCreation(mainWindow,true);
+		settingsScene = new ProfileScene();
+
 		
 	}
 
@@ -80,7 +84,7 @@ public class Main extends Application
 				{
 					try
 					{
-						login(userField, passField, mainWindow);
+						login(userField, passField, mainWindow,false);
 					} catch (Exception e1)
 					{
 						e1.printStackTrace();
@@ -102,7 +106,7 @@ public class Main extends Application
 							profileCreation.levOfEduBox.getValue()
 					);
 					//created user, now log into automatically
-					login(profileCreation.usernameField.getText(), profileCreation.passwordField.getText(), mainWindow);
+					login(profileCreation.usernameField.getText(), profileCreation.passwordField.getText(), mainWindow,false);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -138,10 +142,11 @@ public class Main extends Application
 										"', last_name = '" + settingsCreation.lNameField.getText() +
 										"', education = '" + settingsCreation.levOfEduBox.getValue() +
 										"', location = '" + settingsCreation.locationField.getText() +
+										"', status = '" + settingsCreation.statusField.getText() +
 										"' WHERE id = '" + account.getId() + "';");
 						statement.executeUpdate();
 						//clear profile old info, then reload it
-						login(settingsCreation.usernameField.getText(), settingsCreation.passwordField.getText(), mainWindow);
+						login(settingsCreation.usernameField.getText(), settingsCreation.passwordField.getText(), mainWindow, true);
 					}
 					catch (Exception e2)
 					{
@@ -191,7 +196,8 @@ public class Main extends Application
 				new ArrayList<Post>(),
                 1,
                 1,
-                1
+                1,
+				"default status"
             );
 
 		    //CANNOT MAKE ACCOUNT HERE, WOULD REQUIRE ANOTHER QUERY AFTER INSERT. JUST REDIRECT NEW USER TO LOGIN.
@@ -227,7 +233,7 @@ public class Main extends Application
 		statement.executeUpdate();
 	}
 
-	public void login(String user, String pass, Stage s) throws Exception{
+	public void login(String user, String pass, Stage s, boolean isSettings) throws Exception{
 		System.out.println("username: " + user);
 		System.out.println("password: " + pass);
 		Connection connect = getConnection();
@@ -264,7 +270,8 @@ public class Main extends Application
                 getAllPosts(),
                 Integer.parseInt(result.getString("age_visibility")),
                 Integer.parseInt(result.getString("friend_visibility")),
-                Integer.parseInt(result.getString("post_visibility"))
+                Integer.parseInt(result.getString("post_visibility")),
+				result.getString("status")
         );
 
         account = new Account(
@@ -272,10 +279,13 @@ public class Main extends Application
                 result.getString("password"),
                 profile, Integer.parseInt(result.getString("id"))
         );
+		if (isSettings){
+			profileScene.loadToScene(id, profile,true);
+		}else{
+			profileScene.loadToScene(id, profile,false);
+		}
 
-        profileScene.loadToScene(id, profile);
-
-		s.setScene(profileScene.getScene());
+        s.setScene(profileScene.getScene());
 		s.getScene().getStylesheets().add(css);
 
 	}
