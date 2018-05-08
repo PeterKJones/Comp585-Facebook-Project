@@ -84,7 +84,7 @@ public class Main extends Application
 				{
 					try
 					{
-						login(userField, passField, mainWindow);
+						login(userField, passField, mainWindow,false);
 					} catch (Exception e1)
 					{
 						e1.printStackTrace();
@@ -106,7 +106,7 @@ public class Main extends Application
 							profileCreation.levOfEduBox.getValue()
 					);
 					//created user, now log into automatically
-					login(profileCreation.usernameField.getText(), profileCreation.passwordField.getText(), mainWindow);
+					login(profileCreation.usernameField.getText(), profileCreation.passwordField.getText(), mainWindow,false);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -146,7 +146,7 @@ public class Main extends Application
 										"' WHERE id = '" + account.getId() + "';");
 						statement.executeUpdate();
 						//clear profile old info, then reload it
-						login(settingsCreation.usernameField.getText(), settingsCreation.passwordField.getText(), mainWindow);
+						login(settingsCreation.usernameField.getText(), settingsCreation.passwordField.getText(), mainWindow, true);
 					}
 					catch (Exception e2)
 					{
@@ -233,7 +233,7 @@ public class Main extends Application
 		statement.executeUpdate();
 	}
 
-	public void login(String user, String pass, Stage s) throws Exception{
+	public void login(String user, String pass, Stage s, boolean isSettings) throws Exception{
 		System.out.println("username: " + user);
 		System.out.println("password: " + pass);
 		Connection connect = getConnection();
@@ -279,8 +279,12 @@ public class Main extends Application
                 result.getString("password"),
                 profile, Integer.parseInt(result.getString("id"))
         );
+		if (isSettings){
+			profileScene.loadToScene(id, profile,true);
+		}else{
+			profileScene.loadToScene(id, profile,false);
+		}
 
-        profileScene.loadToScene(id, profile);
         s.setScene(profileScene.getScene());
 		s.getScene().getStylesheets().add(css);
 
