@@ -282,6 +282,7 @@ public class ProfileCreation
 				locationField.setText(result.getString("location"));
 				usernameField.setText(result.getString("username"));
 				passwordField.setText(result.getString("password"));
+				statusField.setText(result.getString("status"));
 			}
 		}
 		catch(Exception e){

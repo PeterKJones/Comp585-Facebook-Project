@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ce3305c8-a2de-491b-9de1-4029187badab" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Scenes/ProfileScene.java" afterPath="$PROJECT_DIR$/src/Scenes/ProfileScene.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Scenes/ProfileCreation.java" afterPath="$PROJECT_DIR$/src/Scenes/ProfileCreation.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,14 +22,18 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ProfileScene.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ProfileScene.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Scenes/ProfileScene.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="238" column="24" lean-forward="true" selection-start-line="238" selection-start-column="24" selection-end-line="238" selection-end-column="24" />
+            <state relative-caret-position="867">
+              <caret line="235" column="28" lean-forward="false" selection-start-line="235" selection-start-column="28" selection-end-line="235" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#5869#5875#0" expanded="true" />
+                <marker date="1525832004798" expanded="true" signature="8965:9051" ph="//..." />
+                <marker date="1525832004798" expanded="true" signature="10654:11137" ph="{...}" />
+                <marker date="1525832004798" expanded="true" signature="11175:11609" ph="{...}" />
+                <marker date="1525832004798" expanded="true" signature="11665:12192" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -38,8 +42,8 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-918">
-              <caret line="238" column="38" lean-forward="false" selection-start-line="238" selection-start-column="29" selection-end-line="238" selection-end-column="38" />
+            <state relative-caret-position="153">
+              <caret line="159" column="54" lean-forward="true" selection-start-line="159" selection-start-column="54" selection-end-line="159" selection-end-column="54" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -47,11 +51,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ProfileCreation.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ProfileCreation.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Scenes/ProfileCreation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-174">
-              <caret line="251" column="42" lean-forward="false" selection-start-line="251" selection-start-column="33" selection-end-line="251" selection-end-column="42" />
+            <state relative-caret-position="204">
+              <caret line="284" column="60" lean-forward="false" selection-start-line="284" selection-start-column="60" selection-end-line="284" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -60,7 +64,7 @@
       <file leaf-file-name="SettingsScene.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Scenes/SettingsScene.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1615">
+            <state relative-caret-position="389">
               <caret line="117" column="0" lean-forward="false" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
               <folding />
             </state>
@@ -73,9 +77,12 @@
             <state relative-caret-position="425">
               <caret line="35" column="5" lean-forward="false" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#504#505#0" expanded="true" />
-                <element signature="e#527#528#0" expanded="true" />
+                <element signature="e#347#348#0" expanded="false" />
+                <element signature="e#368#369#0" expanded="false" />
+                <element signature="e#395#396#0" expanded="false" />
+                <element signature="e#415#416#0" expanded="false" />
+                <element signature="e#451#452#0" expanded="false" />
+                <element signature="e#474#475#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -125,6 +132,9 @@
       <find>firstName</find>
       <find>image</find>
       <find>getconnec</find>
+      <find>settings</find>
+      <find>profile</find>
+      <find>logout</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -153,9 +163,9 @@
         <option value="$PROJECT_DIR$/src/Classes/Profile.java" />
         <option value="$PROJECT_DIR$/src/Classes/Post.java" />
         <option value="$PROJECT_DIR$/src/Scenes/SettingsScene.java" />
+        <option value="$PROJECT_DIR$/src/Scenes/ProfileScene.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/src/Scenes/ProfileCreation.java" />
-        <option value="$PROJECT_DIR$/src/Scenes/ProfileScene.java" />
       </list>
     </option>
   </component>
@@ -479,7 +489,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -723,22 +733,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Scenes/SettingsScene.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1615">
-          <caret line="117" column="0" lean-forward="false" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Classes/Post.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
           <caret line="35" column="5" lean-forward="false" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#504#505#0" expanded="true" />
-            <element signature="e#527#528#0" expanded="true" />
+            <element signature="e#347#348#0" expanded="false" />
+            <element signature="e#368#369#0" expanded="false" />
+            <element signature="e#395#396#0" expanded="false" />
+            <element signature="e#415#416#0" expanded="false" />
+            <element signature="e#451#452#0" expanded="false" />
+            <element signature="e#474#475#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -751,32 +756,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Scenes/ProfileCreation.java">
+    <entry file="file://$PROJECT_DIR$/src/Scenes/ProfileScene.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-174">
-          <caret line="251" column="42" lean-forward="false" selection-start-line="251" selection-start-column="33" selection-end-line="251" selection-end-column="42" />
-          <folding />
+        <state relative-caret-position="867">
+          <caret line="235" column="28" lean-forward="false" selection-start-line="235" selection-start-column="28" selection-end-line="235" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5869#5875#0" expanded="true" />
+            <marker date="1525832004798" expanded="true" signature="8965:9051" ph="//..." />
+            <marker date="1525832004798" expanded="true" signature="10654:11137" ph="{...}" />
+            <marker date="1525832004798" expanded="true" signature="11175:11609" ph="{...}" />
+            <marker date="1525832004798" expanded="true" signature="11665:12192" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-918">
-          <caret line="238" column="38" lean-forward="false" selection-start-line="238" selection-start-column="29" selection-end-line="238" selection-end-column="38" />
+        <state relative-caret-position="153">
+          <caret line="159" column="54" lean-forward="true" selection-start-line="159" selection-start-column="54" selection-end-line="159" selection-end-column="54" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Scenes/ProfileScene.java">
+    <entry file="file://$PROJECT_DIR$/src/Scenes/SettingsScene.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="238" column="24" lean-forward="true" selection-start-line="238" selection-start-column="24" selection-end-line="238" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#5869#5875#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="389">
+          <caret line="117" column="0" lean-forward="false" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Scenes/ProfileCreation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="284" column="60" lean-forward="false" selection-start-line="284" selection-start-column="60" selection-end-line="284" selection-end-column="60" />
+          <folding />
         </state>
       </provider>
     </entry>
