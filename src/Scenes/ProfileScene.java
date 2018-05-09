@@ -230,7 +230,10 @@ public class ProfileScene
                     deleteButtonsId.add(new Integer(p.getPostId()));*/
 
                         vBox.getChildren().add(delete);
+
                     }
+
+                    topMiddleVB.getChildren().add(vBox);
                     //Now time to load friends of the user
                     //first get list of friends
                     try {
@@ -249,11 +252,9 @@ public class ProfileScene
 
                                 friendsHBox.getChildren().add(friendName);
                                 friendsHBox.getChildren().add(friendButton);
-
-                                topMiddleVB.getChildren().add(vBox);
-                                rightVB.getChildren().add(friendsHBox);
                             }
                         }
+                        rightVB.getChildren().add(friendsHBox);
                     }catch (Exception e){
                         e.printStackTrace();
                     }
